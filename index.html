@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raymond Chelle - Portfolio</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 600;
+        }
+        
+        .nav-link {
+            margin: 0 10px;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+        
+        .about-content {
+            padding: 80px 0;
+        }
+        
+        .skill-item {
+            margin-bottom: 20px;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .project-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .experience-item {
+            border-left: 2px solid var(--secondary-color);
+            padding-left: 25px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            left: -9px;
+            top: 5px;
+        }
+        
+        .contact-info {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+        }
+        
+        .btn-download {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-download:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Raymond Chelle</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Raymond Chelle</h1>
+            <p class="lead">Passionné de cybersécurité, prêt à relever les défis informatiques de demain !</p>
+            <a href="#contact" class="btn btn-light btn-lg mt-3">Me contacter</a>
+            <a href="#" class="btn btn-outline-light btn-lg mt-3 ms-2 btn-download" id="downloadCV">Télécharger mon CV</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-content">
+        <div class="container">
+            <h2 class="section-title text-center">À propos de moi</h2>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <img src="pdp.jpg" 
+                         alt="Raymond Chelle" class="img-fluid rounded-circle">
+                </div>
+                <div class="col-md-8">
+                    <p>Je suis un passionné de cybersécurité avec une solide formation en informatique. Mon parcours académique et mes expériences professionnelles m'ont permis de développer des compétences techniques et relationnelles variées.</p>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Nom :</strong> Raymond Chelle</li>
+                                <li><strong>Email :</strong> chelleraymond05@gmail.com</li>
+                                <li><strong>Téléphone :</strong> 07 85 65 78 94</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Âge :</strong> 17 ans</li>
+                                <li><strong>Localisation :</strong> Gap, Hautes-Alpes</li>
+                                <li><strong>Nationalité :</strong> Française</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="mt-3">Je suis rigoureux, précis dans mon travail et capable de suivre des protocoles stricts. Mes centres d'intérêt incluent le football et les animaux.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Mes compétences</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="skill-item">
+                        <h5>Communication efficace</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Travail d'équipe</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Gestion des conflits</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="skill-item">
+                        <h5>Rigueur et précision</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Gestion des incidents</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Suivi des procédures de sécurité</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Mes projets</h2>
+            <div class="row">
+                <!-- Project 1 -->
+                <div class="col-md-4">
+                    <div class="card project-card">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                             class="card-img-top project-img" alt="Projet Programmation Sécurisée">
+                        <div class="card-body">
+                            <h5 class="card-title">Programmation Sécurisée</h5>
+                            <p class="card-text">Projet scolaire sur le développement d'applications sécurisées avec les meilleures pratiques.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project1Modal">
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="col-md-4">
+                    <div class="card project-card">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                             class="card-img-top project-img" alt="Projet Algorithmique">
+                        <div class="card-body">
+                            <h5 class="card-title">Algorithmique Avancée</h5>
+                            <p class="card-text">Développement d'algorithmes complexes pour résoudre des problèmes informatiques.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project2Modal">
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="col-md-4">
+                    <div class="card project-card">
+                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                             class="card-img-top project-img" alt="Projet Systèmes d'Exploitation">
+                        <div class="card-body">
+                            <h5 class="card-title">Systèmes d'Exploitation</h5>
+                            <p class="card-text">Étude approfondie des systèmes d'exploitation et développement de composants système.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project3Modal">
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Mon expérience</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Experience 1 -->
+                    <div class="experience-item">
+                        <h4>Serveur</h4>
+                        <h5>Le Jasmin Embrun</h5>
+                        <p class="text-muted">Juillet 2025 - Août 2025</p>
+                        <ul>
+                            <li>Accueil et prise en charge des clients</li>
+                            <li>Gestion des incidents et des demandes des clients</li>
+                            <li>Suivi des procédures de sécurité</li>
+                            <li>Travail en équipe</li>
+                            <li>Gestion des paiements et des encaissements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Formation</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Education 1 -->
+                    <div class="experience-item">
+                        <h4>BTS SIO</h4>
+                        <h5>Dominique Villars Gap</h5>
+                        <p class="text-muted">Septembre 2025 - Juin 2027</p>
+                        <p>Projets scolaires sur la programmation sécurisée, notes élevées, matières principales : Algorithmique, Systèmes d'exploitation</p>
+                    </div>
+                    <!-- Education 2 -->
+                    <div class="experience-item">
+                        <h4>Baccalauréat Général (Mathématiques et Physique)</h4>
+                        <h5>Lycée Dominique Villars Gap</h5>
+                        <p class="text-muted">Septembre 2022 - Juin 2025</p>
+                        <p>Mention Assez Bien</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Contactez-moi</h2>
+            <div class="row">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="contact-info">
+                        <h4>Coordonnées</h4>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 6 Rue de Saint-Mens, Gap (05000)</p>
+                        <p><i class="fas fa-phone me-2"></i> 07 85 65 78 94</p>
+                        <p><i class="fas fa-envelope me-2"></i> chelleraymond05@gmail.com</p>
+                        
+                        <div class="social-icons mt-4">
+                            <h4>Réseaux sociaux</h4>
+                            <a href="https://www.linkedin.com/in/raymond-chelle-477517382" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/rdchelle" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://instagram.com/rdchelle7_" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Votre nom" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Votre email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Sujet">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Votre message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <h3>Localisation</h3>
+                    <div class="mt-3" style="height: 300px; background-color: #eee; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <p class="text-muted">Carte interactive (Gap, Hautes-Alpes)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 Raymond Chelle. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Project Modals -->
+    <!-- Modal 1 -->
+    <div class="modal fade" id="project1Modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Programmation Sécurisée</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         class="img-fluid mb-3" alt="Projet Programmation Sécurisée">
+                    <p>Ce projet scolaire consistait à développer une application web sécurisée en suivant les meilleures pratiques de développement.</p>
+                    <p>J'ai implémenté des fonctionnalités telles que l'authentification à deux facteurs, le chiffrement des données sensibles et la protection contre les injections SQL.</p>
+                    <p><strong>Technologies utilisées :</strong> HTML, CSS, JavaScript, PHP, MySQL</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="project2Modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Algorithmique Avancée</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         class="img-fluid mb-3" alt="Projet Algorithmique">
+                    <p>Dans le cadre de ce projet, j'ai développé plusieurs algorithmes complexes pour résoudre des problèmes d'optimisation et de traitement de données.</p>
+                    <p>J'ai notamment travaillé sur des algorithmes de tri avancés, des structures de données complexes et des méthodes de recherche efficaces.</p>
+                    <p><strong>Technologies utilisées :</strong> Python, Java, C++</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="project3Modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Systèmes d'Exploitation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         class="img-fluid mb-3" alt="Projet Systèmes d'Exploitation">
+                    <p>Ce projet portait sur l'étude approfondie des systèmes d'exploitation et le développement de composants système.</p>
+                    <p>J'ai implémenté un scheduler de processus, un système de gestion de mémoire virtuelle et un système de fichiers simplifié.</p>
+                    <p><strong>Technologies utilisées :</strong> C, Linux, Bash</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('shadow');
+            } else {
+                navbar.classList.remove('shadow');
+            }
+        });
+        
+        // CV Download
+        document.getElementById('downloadCV').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = 'CV_2025-09-03_Raymond_Chelle.pdf'; // This should point to your actual CV file
+            link.download = 'CV_Raymond_Chelle.pdf';
+            
+            // Append to body, click and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci pour votre message ! Je vous répondrai dès que possible.');
+            this.reset();
+        });
+        
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+</body>
+</html>
