@@ -1,3 +1,6 @@
+Voici votre code avec 2 nouvelles fenêtres BLOC ajoutées :
+
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -450,7 +453,7 @@
                     </div>
                 </div>
 
-                <!-- NOUVEAU TP BLOCS 7 -->
+                <!-- TP BLOCS 7 -->
                 <div class="col-md-4 mb-4">
                     <div class="card report-card h-100">
                         <div class="card-body text-center">
@@ -464,7 +467,7 @@
                     </div>
                 </div>
 
-                <!-- NOUVEAU TP BLOCS 8 -->
+                <!-- TP BLOCS 8 -->
                 <div class="col-md-4 mb-4">
                     <div class="card report-card h-100">
                         <div class="card-body text-center">
@@ -474,6 +477,34 @@
                             <h5 class="card-title">TP : Le serveur NAS</h5>
                             <p class="card-text"></p>
                             <a href="rapports/nas.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU TP BLOCS 9 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 05 : Exercices JAVA</h5>
+                            <p class="card-text"</p>
+                            <a href="rapports/5exjava.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU TP BLOCS 10 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 10 - Virtualisation</h5>
+                            <p class="card-text">Déploiement et gestion des machines virtuelles</p>
+                            <a href="rapports/virtualisation.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
                         </div>
                     </div>
                 </div>
@@ -552,7 +583,7 @@
                     </div>
                 </div>
 
-                <!-- NOUVEAU TP ATELIER 6 -->
+                <!-- TP ATELIER 6 -->
                 <div class="col-md-4 mb-4">
                     <div class="card report-card h-100">
                         <div class="card-body text-center">
@@ -566,7 +597,7 @@
                     </div>
                 </div>
 
-                <!-- NOUVEAU TP ATELIER 7 -->
+                <!-- TP ATELIER 7 -->
                 <div class="col-md-4 mb-4">
                     <div class="card report-card h-100">
                         <div class="card-body text-center">
@@ -759,40 +790,4 @@
     <!-- Bootstrap & jQuery JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Back to top button
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 100) {
-                    $('.back-to-top').addClass('show');
-                } else {
-                    $('.back-to-top').removeClass('show');
-                }
-            });
-            
-            $('.back-to-top').click(function() {
-                $('html, body').animate({scrollTop: 0}, 800);
-                return false;
-            });
-            
-            // Navbar background change on scroll
-            $(window).scroll(function() {
-                if ($(window).scrollTop() > 50) {
-                    $('.navbar').css('background-color', var(--primary-color));
-                } else {
-                    $('.navbar').css('background-color', 'transparent');
-                }
-            });
-            
-            // Smooth scrolling for navbar links
-            $('.navbar-nav a').on('click', function(event) {
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top - 70
-                    }, 800);
-                }
-            });
-            
-           
+    <script
