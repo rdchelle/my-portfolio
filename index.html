@@ -506,7 +506,7 @@
                     </div>
                 </div>
 
-                <!-- NOUVEAU TP BLOCS 11 -->
+                <!-- TP BLOCS 11 -->
                 <div class="col-md-4 mb-4">
                     <div class="card report-card h-100">
                         <div class="card-body text-center">
@@ -520,7 +520,7 @@
                     </div>
                 </div>
 
-                <!-- NOUVEAU TP BLOCS 12 -->
+                <!-- TP BLOCS 12 -->
                 <div class="col-md-4 mb-4">
                     <div class="card report-card h-100">
                         <div class="card-body text-center">
@@ -530,6 +530,34 @@
                             <h5 class="card-title">TP BLOCS 12 - Virtualisation</h5>
                             <p class="card-text">Déploiement et gestion des machines virtuelles</p>
                             <a href="rapports/virtualisation.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU TP BLOCS 13 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 13 - Sécurité Réseau</h5>
+                            <p class="card-text">Configuration des pare-feu et analyse de sécurité</p>
+                            <a href="rapports/securite_reseau.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU TP BLOCS 14 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 14 - Administration Système</h5>
+                            <p class="card-text">Gestion des utilisateurs et des permissions</p>
+                            <a href="rapports/admin_systeme.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
                         </div>
                     </div>
                 </div>
@@ -777,93 +805,4 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                         class="img-fluid mb-3" alt="Projet Algorithmique">
-                    <p>Dans le cadre de ce projet, j'ai développé plusieurs algorithmes complexes pour résoudre des problèmes d'optimisation et de traitement de données.</p>
-                    <p>J'ai notamment travaillé sur des algorithmes de tri avancés, des structures de données complexes et des méthodes de recherche efficaces.</p>
-                    <p><strong>Technologies utilisées :</strong> Python, Java, C++</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 3 -->
-    <div class="modal fade" id="project3Modal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Systèmes d'Exploitation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                         class="img-fluid mb-3" alt="Projet Systèmes d'Exploitation">
-                    <p>Ce projet portait sur l'étude approfondie des systèmes d'exploitation et le développement de composants système.</p>
-                    <p>J'ai travaillé sur la gestion des processus, la mémoire virtuelle, les systèmes de fichiers et les mécanismes de synchronisation.</p>
-                    <p><strong>Technologies utilisées :</strong> C, Linux, Bash</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap & jQuery JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Back to top button
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 100) {
-                    $('.back-to-top').addClass('show');
-                } else {
-                    $('.back-to-top').removeClass('show');
-                }
-            });
-            
-            $('.back-to-top').click(function() {
-                $('html, body').animate({scrollTop: 0}, 800);
-                return false;
-            });
-            
-            // Navbar background change on scroll
-            $(window).scroll(function() {
-                if ($(window).scrollTop() > 50) {
-                    $('.navbar').css('background-color', 'var(--primary-color)');
-                } else {
-                    $('.navbar').css('background-color', 'transparent');
-                }
-            });
-            
-            // Smooth scrolling for navbar links
-            $('.navbar-nav a').on('click', function(event) {
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top - 70
-                    }, 800);
-                }
-            });
-            
-            // CV download button
-            $('#downloadCV').click(function(e) {
-                e.preventDefault();
-                alert('Téléchargement du CV simulé. Dans une implémentation réelle, cela téléchargerait votre CV.');
-            });
-            
-            // Contact form submission
-            $('#contactForm').submit(function(e) {
-                e.preventDefault();
-                alert('Message envoyé avec succès! (simulation)');
-                $('#contactForm')[0].reset();
-            });
-        });
-    </script>
-</body>
-</html>
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8
