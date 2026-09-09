@@ -1,1430 +1,665 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raymond Chelle - Portfolio</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Veille SISR – Sécurisation Wallets Crypto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkblue: '#0F172A', 
+                        cyber: '#1E293B',
+                        violet: '#8B5CF6',
+                        accent: '#38BDF8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-        }
+        body { font-family: 'Inter', sans-serif; }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            scroll-behavior: smooth;
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
-        
-        .navbar {
-            background-color: var(--primary-color);
-            padding: 15px 0;
-            transition: all 0.3s ease;
+
+        .content-section {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.4s ease-out forwards;
         }
-        
-        .navbar-brand, .nav-link {
-            color: white !important;
-            font-weight: 600;
-        }
-        
-        .nav-link {
-            margin: 0 10px;
-        }
-        
-        .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 150px 0 100px;
-            text-align: center;
-        }
-        
-        .section-title {
-            position: relative;
-            margin-bottom: 40px;
-            font-weight: 700;
-        }
-        
-        .section-title::after {
-            content: '';
+        .content-section.active {
             display: block;
-            width: 50px;
-            height: 3px;
-            background: var(--secondary-color);
-            margin: 15px auto 0;
         }
-        
-        .about-content {
-            padding: 80px 0;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .skill-item {
-            margin-bottom: 20px;
-        }
-        
-        .progress {
-            height: 10px;
-            border-radius: 5px;
-        }
-        
-        .project-card {
-            border: none;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-bottom: 30px;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .project-img {
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .experience-item {
-            border-left: 2px solid var(--secondary-color);
-            padding-left: 25px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .experience-item::before {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--secondary-color);
-            left: -9px;
-            top: 5px;
-        }
-        
-        .contact-info {
-            background-color: var(--light-color);
-            padding: 30px;
-            border-radius: 10px;
-        }
-        
-        .social-icons a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            margin-right: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icons a:hover {
-            background: var(--secondary-color);
-            transform: translateY(-5px);
-        }
-        
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 30px 0;
-        }
-        
-        .btn-download {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-download:hover {
-            background-color: #c0392b;
-            transform: translateY(-3px);
-        }
-        
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: var(--secondary-color);
-            color: white;
-            border-radius: 50%;
+
+        .screenshot-placeholder {
+            border: 2px dashed #475569;
+            background-color: #1e293b;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
+            color: #94a3b8;
+            transition: all 0.3s;
+        }
+        .screenshot-placeholder:hover {
+            border-color: #8B5CF6;
+            color: #8B5CF6;
+        }
+        
+        .table-link {
+            color: #94a3b8;
+            transition: color 0.2s;
             text-decoration: none;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
+            display: inline-block;
+            padding: 4px;
         }
-        
-        .back-to-top.show {
-            opacity: 1;
-        }
-        
-        .report-card {
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        
-        .report-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .report-icon {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
+        .table-link:hover {
+            color: #8B5CF6;
+            transform: scale(1.1);
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-900 text-gray-100 min-h-screen flex flex-col">
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Raymond Chelle</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#reports">Comptes Rendus</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#veille">Veille</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
+    <nav class="fixed w-full z-50 bg-slate-900/95 border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/20">
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Veille<span class="text-violet-400">SISR</span></span>
+                </div>
+
+                <div class="hidden md:flex space-x-1" id="desktop-menu"></div>
+
+                <div class="hidden md:block px-3 py-1 rounded-full bg-green-900/30 border border-green-500/30 text-green-400 text-xs font-semibold flex items-center gap-2">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    MAJ : Septembre 2026
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Raymond Chelle</h1>
-            <p class="lead">Passionné de cybersécurité, prêt à relever les défis informatiques de demain !</p>
-            <a href="#contact" class="btn btn-light btn-lg mt-3">Me contacter</a>
-            <a href="#" class="btn btn-outline-light btn-lg mt-3 ms-2 btn-download" id="downloadCV">Télécharger mon CV</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-content">
-        <div class="container">
-            <h2 class="section-title text-center">À propos de moi</h2>
-            <div class="row align-items-center">
-                <div class="col-md-4 text-center mb-4 mb-md-0">
-                    <img src="pdp.jpg" alt="Raymond Chelle" class="img-fluid rounded-circle">
-                </div>
-                <div class="col-md-8">
-                    <p>Je suis un passionné de cybersécurité avec une solide formation en informatique. Mon parcours académique et mes expériences professionnelles m'ont permis de développer des compétences techniques et relationnelles variées.</p>
-                    <div class="row mt-4">
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled">
-                                <li><strong>Nom :</strong> Raymond Chelle</li>
-                                <li><strong>Email :</strong> chelleraymond05@gmail.com</li>
-                                <li><strong>Téléphone :</strong> 07 85 65 78 94</li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled">
-                                <li><strong>Âge :</strong> 18 ans</li>
-                                <li><strong>Localisation :</strong> Gap, Hautes-Alpes</li>
-                                <li><strong>Nationalité :</strong> Française</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <p class="mt-3">Je suis rigoureux, précis dans mon travail et capable de suivre des protocoles stricts. Mes centres d'intérêt incluent le sport en général et les échecs.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="bg-light py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Mes compétences</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="skill-item">
-                        <h5>Communication efficace</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 90%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <h5>Travail d'équipe</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <h5>Gestion des conflits</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 80%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="skill-item">
-                        <h5>Rigueur et précision</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <h5>Gestion des incidents</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <h5>Suivi des procédures de sécurité</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Mes projets</h2>
-            <div class="row">
-                <!-- Project 1 -->
-                <div class="col-md-4">
-                    <div class="card project-card">
-                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                             class="card-img-top project-img" alt="Projet Programmation Sécurisée">
-                        <div class="card-body">
-                            <h5 class="card-title">Programmation Sécurisée</h5>
-                            <p class="card-text">Projet scolaire sur le développement d'applications sécurisées avec les meilleures pratiques.</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project1Modal">
-                                Voir les détails
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="col-md-4">
-                    <div class="card project-card">
-                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                             class="card-img-top project-img" alt="Projet Algorithmique">
-                        <div class="card-body">
-                            <h5 class="card-title">Algorithmique Avancée</h5>
-                            <p class="card-text">Développement d'algorithmes complexes pour résoudre des problèmes informatiques.</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project2Modal">
-                                Voir les détails
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="col-md-4">
-                    <div class="card project-card">
-                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                             class="card-img-top project-img" alt="Projet Systèmes d'Exploitation">
-                        <div class="card-body">
-                            <h5 class="card-title">Systèmes d'Exploitation</h5>
-                            <p class="card-text">Étude approfondie des systèmes d'exploitation et développement de composants système.</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project3Modal">
-                                Voir les détails
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reports Section -->
-    <section id="reports" class="bg-light py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Comptes Rendus de TP</h2>
-            
-            <!-- BLOCS Section -->
-            <h3 class="mt-5 mb-4">TP de BLOCS</h3>
-            <div class="row">
-                <!-- TP BLOCS 1 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP BLOCS 1 - Paramétrage du matériel informatique</h5>
-                            <p class="card-text">Rapport sur la configuration réseau, incluant un schéma réseau et un tutoriel.</p>
-                            <a href="rapports/informatique.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP BLOCS 2 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP BLOCS 2 - Activité Classic Maze</h5>
-                            <p class="card-text">Rapport sur programmation (Scratch)</p>
-                            <a href="rapports/mazee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP BLOCS 3 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP BLOCS 3 - Mes premiers pas en Java</h5>
-                            <p class="card-text">Rapport sur programmation (Java)</p>
-                            <a href="rapports/java.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP BLOCS 4 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP BLOCS 4 - Les logiciels de capture d'écran</h5>
-                            <p class="card-text">Rapport sur les logiciels de capture d'écran</p>
-                            <a href="rapports/ecrann.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP BLOCS 5 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP BLOCS 5 - Java</h5>
-                            <p class="card-text">Rapport sur programmation (Java)</p>
-                            <a href="rapports/javaaaquiz.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP BLOCS 6 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TD1 : Cybersécurité</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/cyberrrr.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
+    <main class="max-w-7xl mx-auto pt-24 pb-12 px-4 sm:px-6 lg:px-8 flex-grow">
+        
+        <!-- SECTION 1 : ACCUEIL -->
+        <section id="accueil" class="content-section active">
+            <div class="glass-panel rounded-2xl p-8 mb-8">
+                <div class="border-l-4 border-violet-500 pl-6 mb-8">
+                    <h1 class="text-4xl font-extrabold text-white mb-2">
+                        Sécurisation des Portefeuilles Crypto & Clés Privées
+                    </h1>
+                    <p class="text-lg text-gray-400">
+                        Veille Technologique & Réglementaire – BTS SIO Option SISR
+                    </p>
                 </div>
 
-                <!-- TP BLOCS 7 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Les commandes</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/commandee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 8 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Le serveur NAS</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/nas.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 9 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 05 : Exercices JAVA</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/5exjava.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 10 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : TechCorp</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/techcorp.docx.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 11 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Fonctions et Procédures</h5>
-                            <p class="card-text">Rapport sur sur programmation (Java)</p>
-                            <a href="rapports/fonctions.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 12 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : PIA 1 </h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/pia1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 13 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : PIA 2</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/pia2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 14 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TD 01 : Bloc 3</h5>
-                            <p class="card-text">Cybersécurité</p>
-                            <a href="rapports/mabanque.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 15 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Bataille Navale</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/bataille.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 16 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Classe Livre et Compte</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/classde.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 17 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Base de données Leclerc</h5>
-                            <p class="card-text">Rapport sur la création et gestion d'une base de données relationnelle</p>
-                            <a href="rapports/leclerc.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 18 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Scénario Linux</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/senario.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 19 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Prise de contrôle à distance</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/distance.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 20 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Partitionnement de disques durs</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/partition.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 21 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Kali : John The Ripper</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/kalilive.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 22 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : CH4 TD2</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/brillattt.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 23 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : WAKE ON LAN</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/WOL.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 24 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Serveur 2003</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/serveur2003.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 25 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Clonage</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/clonageee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 26 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : HFS</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/hfs.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 27 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Active Directory</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/uoo.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 28 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : LECLERC 2</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/leclerc2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 29 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Gestionnaire de sauvegarde</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/sauvegarde.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 30 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : BDD ZOO</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/zooo.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 31 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Keylogger</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/keyloggerr.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 32 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : PHP 1</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/php1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 33 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Kit du Technicien</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/technicien-1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 34 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : TD3 Veille M@Banque</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/td3.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 35 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : ANSSI</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/anssi.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP BLOCS 36 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Deep Freeze</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/tp16_deepfreeze.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP :Protection Serveur Web</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/protection.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP :Switch Manageable</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/switchh.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : Base de données</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/bddgsb.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : DHCP</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/dhcpp.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP : GPO</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/gpo.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TD7: Gérer les accès et les privilèges appropriés </h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/td7_cyb.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TD8: Packet Tracer </h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/packet.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP: Base PHP </h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/php3.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP: Programmer avec PHP </h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/php2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP: Transmission de données </h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/php4.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ATELIER DE PROFESSIONNALISATION Section -->
-            <h3 class="mt-5 mb-4">TP d'ATELIER DE PROFESSIONNALISATION</h3>
-            <div class="row">
-                <!-- TP ATELIER 1 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP ATELIER 1 - Création du portfolio (HTML)</h5>
-                            <p class="card-text">Compte rendu du développement du site.</p>
-                            <a href="rapports/atelier1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 2 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP02 : Les logiciels de diagnostic</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/ordii.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 3 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP03 : Le HTML</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/htmlzez.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 4 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 04 : les bases du CSS</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/csss.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 5 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 05 : CSS Avancé 1/2</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/css1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 6 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 06 : Shifumi</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/shifumi.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 7 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 07 : CSS Avancé 2/2</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/css2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 8 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 08 : Formulaire</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/formulaire.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 9 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 09 : Responsive Design</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/responsive.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 10 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 10 : Site Vitrine</h5>
-                            <p class="card-text">Manipulation d'un logiciel WYSIWYG</p>
-                            <a href="rapports/sitevitrinee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 11 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 11 : Hébergement du site</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/hebergementtt.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TP ATELIER 12 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card report-card h-100">
-                        <div class="card-body text-center">
-                            <div class="report-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <h5 class="card-title">TP 12 : Transfert du site</h5>
-                            <p class="card-text"></p>
-                            <a href="rapports/transfert.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Veille Technologique Section -->
-    <section id="veille" class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Veille Technologique</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card report-card border-0 shadow-sm p-4 text-center">
-                        <div class="report-icon">
-                            <i class="fas fa-shield-halved"></i>
-                        </div>
-                        <h4 class="card-title fw-bold">Sécurisation des Portefeuilles Crypto[cite: 2]</h4>
-                        <p class="text-muted mb-3">BTS SIO SISR – Suivi des vulnérabilités, architectures multi-parties (MPC), Clear Signing et protocoles matériels[cite: 2].</p>
-                        <p class="card-text">
-                            Consultez la veille complète : méthodologie détaillée de collecte (Feedly, Google Alerts, Pocket, X/Twitter), tableau chronologique des failles et analyse prospective[cite: 2].
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 transition-colors">
+                        <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                            <span class="text-violet-400 mr-2">📌</span> Sujet & Enjeux d'Infrastructure
+                        </h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Les portefeuilles numériques (Hardware Wallets, MPC, Smart Contract Wallets) gèrent la cryptographie asymétrique et la détention des clés privées. Dans le cadre d'infrastructures d'entreprises et de Web3, ils représentent un <strong>Single Point of Failure (SPOF)</strong> critique. L'enjeu est de neutraliser les attaques d'ingénierie sociale (drainers, signature poisoning), les malwares infostealers et les compromissions de firmwares.
                         </p>
-                        <div class="mt-3">
-                            <a href="veille.html" class="btn btn-primary btn-lg px-4" target="_blank">
-                                <i class="fas fa-external-link-alt me-2"></i>Consulter la veille
-                            </a>
-                        </div>
+                    </div>
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 transition-colors">
+                        <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                            <span class="text-violet-400 mr-2">🎯</span> Périmètre & Objectifs
+                        </h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            1. <strong>Surveillance des failles :</strong> Vulnérabilités de microprogrammes, attaques par canaux auxiliaires (Side-Channel) et malwares d'extraction.<br>
+                            2. <strong>Évolution des standards :</strong> Adoption de l'Account Abstraction (ERC-4337), des signatures EIP-7702 et de la cryptographie post-quantique.<br>
+                            3. <strong>Durcissement opérationnel :</strong> Établissement de procédures de gestion d'actifs numériques applicables en entreprise.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="bg-light py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Mon expérience</h2>
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <!-- Experience 1 -->
-                    <div class="experience-item">
-                        <h4>Serveur</h4>
-                        <h5>Le Jasmin Embrun</h5>
-                        <p class="text-muted">Juillet 2025 - Août 2025</p>
-                        <ul>
-                            <li>Accueil et prise en charge des clients</li>
-                            <li>Gestion des incidents et des demandes des clients</li>
-                            <li>Suivi des procédures de sécurité</li>
-                            <li>Travail en équipe</li>
-                            <li>Gestion des paiements et des encaissements</li>
-                        </ul>
+        <!-- SECTION 2 : OUTILS ET MÉTHODOLOGIE DÉTAILLÉE -->
+        <section id="outils" class="content-section">
+            
+            <!-- Processus hebdomadaire -->
+            <div class="glass-panel rounded-2xl p-6 mb-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Cycle Opérationnel Hebdomadaire
+                </h2>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-blue-500">
+                        <span class="text-xs font-bold text-blue-400 uppercase">Lundi (35 min) – Collecte & Push</span>
+                        <h4 class="text-white font-bold mt-1">Filtrage RSS & Alertes</h4>
+                        <p class="text-gray-400 text-sm mt-2">Dépouillement des flux Feedly (dossier Sécurité), passage en revue des notifications Google Alerts et tri rapide des faux positifs.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-violet-500">
+                        <span class="text-xs font-bold text-violet-400 uppercase">Mercredi (45 min) – Traitement</span>
+                        <h4 class="text-white font-bold mt-1">Analyse Technique</h4>
+                        <p class="text-gray-400 text-sm mt-2">Lecture détaillée des CVE et whitepapers sauvegardés sur Pocket, vérification de la reproductibilité et qualification de l'impact (faible / critique).</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-green-500">
+                        <span class="text-xs font-bold text-green-400 uppercase">Vendredi (20 min) – Restitution</span>
+                        <h4 class="text-white font-bold mt-1">Synthèse & Actions</h4>
+                        <p class="text-gray-400 text-sm mt-2">Enregistrement dans le tableau de bord, formalisation de recommandations (patchs, règles de filtrage EDR) et archivage pérenne.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Education Section -->
-    <section id="education" class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Formation</h2>
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <!-- Education 1 -->
-                    <div class="experience-item">
-                        <h4>BTS SIO</h4>
-                        <h5>Dominique Villars Gap</h5>
-                        <p class="text-muted">Septembre 2025 - Juin 2027</p>
-                        <p>Projets scolaires sur la programmation sécurisée, notes élevées, matières principales : Algorithmique, Systèmes d'exploitation</p>
-                    </div>
-                    <!-- Education 2 -->
-                    <div class="experience-item">
-                        <h4>Baccalauréat Général (Mathématiques et Physique)</h4>
-                        <h5>Lycée Dominique Villars Gap</h5>
-                        <p class="text-muted">Septembre 2022 - Juin 2025</p>
-                        <p>Mention Assez Bien</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <!-- Fiche détaillée des outils utilisés -->
+            <div class="glass-panel rounded-2xl p-6 mb-8">
+                <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                    Détail Technique des Outils & Paramétrages
+                </h2>
+                <p class="text-sm text-gray-400 mb-6">
+                    Pour garantir une veille rigoureuse sans surcharge informationnelle, chaque outil a un rôle précis dans la chaîne d'acquisition (Pull, Push, Stockage, Alerte).
+                </p>
 
-    <!-- Contact Section -->
-    <section id="contact" class="bg-light py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Contactez-moi</h2>
-            <div class="row">
-                <div class="col-md-5 mb-4 mb-md-0">
-                    <div class="contact-info">
-                        <h4>Coordonnées</h4>
-                        <p><i class="fas fa-map-marker-alt me-2"></i> 6 Rue de Saint-Mens, Gap (05000)</p>
-                        <p><i class="fas fa-phone me-2"></i> 07 85 65 78 94</p>
-                        <p><i class="fas fa-envelope me-2"></i> chelleraymond05@gmail.com</p>
-                        
-                        <div class="social-icons mt-4">
-                            <h4>Réseaux sociaux</h4>
-                            <a href="https://www.linkedin.com/in/raymond-chelle-477517382" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="https://github.com/rdchelle" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://instagram.com/rdchelle7_" target="_blank"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <form id="contactForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Votre nom" required>
-                                </div>
+                <div class="space-y-6">
+                    <!-- Outil 1 : Feedly -->
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-emerald-900/60 text-emerald-300 border border-emerald-500/30">Agrégateur RSS (Push/Pull)</span>
+                                <h3 class="text-xl font-bold text-white">Feedly – Flux de Vulnérabilités & Mises à Jour</h3>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Votre email" required>
+                            <span class="text-xs text-gray-400 font-mono">feedly.com</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Feedly est configuré comme tour de contrôle principale. Il regroupe les flux RSS officiels des constructeurs de portefeuilles, des revues de cybersécurité et des laboratoires de recherche.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+                                <span class="font-bold text-violet-400 block mb-1">Dossiers / Catégories paramétrés :</span>
+                                <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                    <li><code>#Hardware-Security</code> : Ledger Blog, Trezor Release Notes, Yubico Blog.</li>
+                                    <li><code>#CyberSec-Core</code> : The Hacker News, BleepingComputer, CERT-FR (ANSSI).</li>
+                                    <li><code>#Web3-Audits</code> : SlowMist News, CertiK Research, OpenZeppelin Blog.</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+                                <span class="font-bold text-violet-400 block mb-1">Filtres de pertinence & Mots-clés prioritaires :</span>
+                                <p class="text-gray-400 mb-1">Surveillance prioritaire avec surlignage des mots-clés suivants :</p>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">firmware exploit</span>
+                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">seed phrase leak</span>
+                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">side-channel</span>
+                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">stealer</span>
+                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">MPC vulnerability</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Sujet">
+                    </div>
+
+                    <!-- Outil 2 : Google Alerts & Dorks -->
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-red-900/60 text-red-300 border border-red-500/30">Monitoring Passif (Push Email)</span>
+                                <h3 class="text-xl font-bold text-white">Google Alerts – Détection d'Incidents & Dorks</h3>
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono">google.com/alerts</span>
                         </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" rows="5" placeholder="Votre message" required></textarea>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Google Alerts est exploité pour remonter les publications non couvertes par les flux RSS classiques (articles académiques, annonces judiciaires de saisies/hacks et dépôts GitHub contenant des POCs d'exploits).
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+                                <span class="font-bold text-red-400 block mb-1">Requêtes booléennes actives :</span>
+                                <ul class="space-y-1 font-mono text-gray-300">
+                                    <li>• <code>"hardware wallet" AND ("CVE" OR "vulnerability" OR "bypass")</code></li>
+                                    <li>• <code>"MetaMask" OR "Phantom" AND ("drainer" OR "malicious permit")</code></li>
+                                    <li>• <code>"ERC-4337" AND ("exploit" OR "security flaw")</code></li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+                                <span class="font-bold text-red-400 block mb-1">Paramètres de distribution :</span>
+                                <ul class="space-y-1 text-gray-400">
+                                    <li>• <strong>Fréquence :</strong> 1 fois par semaine (digest du lundi matin pour éviter la saturation).</li>
+                                    <li>• <strong>Sources :</strong> Actualités, Blogs et Livres/Discussions.</li>
+                                    <li>• <strong>Qualité :</strong> "Seulement les meilleurs résultats".</li>
+                                </ul>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
-                    </form>
+                    </div>
+
+                    <!-- Outil 3 : Pocket -->
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-pink-900/60 text-pink-300 border border-pink-500/30">Stockage & Qualification</span>
+                                <h3 class="text-xl font-bold text-white">Pocket & Système de Taxonomie par Tags</h3>
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono">getpocket.com</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Pocket sert de sas de décompression entre la découverte d'un article et son exploitation effective. Il évite le phénomène de dispersion en permettant une lecture hors-ligne sans publicité ni distractions.
+                        </p>
+                        <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60 text-xs">
+                            <span class="font-bold text-pink-400 block mb-2">Structure des étiquettes (Tags) de qualification :</span>
+                            <div class="grid sm:grid-cols-4 gap-2">
+                                <div class="bg-slate-800 p-2 rounded">
+                                    <span class="font-mono text-pink-300 font-bold">#A_Traiter</span>
+                                    <p class="text-gray-400 mt-1">Articles sauvegardés en attente d'une lecture approfondie.</p>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded">
+                                    <span class="font-mono text-blue-300 font-bold">#Hardware</span>
+                                    <p class="text-gray-400 mt-1">Failles physiques, chips SE (Secure Element), microcontrôleurs.</p>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded">
+                                    <span class="font-mono text-amber-300 font-bold">#MPC_AA</span>
+                                    <p class="text-gray-400 mt-1">Innovations Smart Wallets, ERC-4337, partage de clés TSS.</p>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded">
+                                    <span class="font-mono text-red-300 font-bold">#Phishing_Threat</span>
+                                    <p class="text-gray-400 mt-1">Attaques d'ingénierie sociale, kits drainers, faux stores d'apps.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Outil 4 : X / Twitter OSINT -->
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-sky-900/60 text-sky-300 border border-sky-500/30">Alerte Temps Réel & OSINT</span>
+                                <h3 class="text-xl font-bold text-white">X (ex-Twitter) – Listes Dédiées "CryptoSec"</h3>
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono">x.com/lists</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Dans le monde décentralisé, les annonces de zero-day ou d'attaques à grande échelle sont divulguées sur X des heures avant les communiqués de presse ou les bases CVE.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+                                <span class="font-bold text-sky-400 block mb-1">Comptes audités & suivis :</span>
+                                <ul class="space-y-1 text-gray-300">
+                                    <li>• <strong>@ZachXBT</strong> : Enquêteur On-Chain indépendant de référence.</li>
+                                    <li>• <strong>@PeckShieldAlert</strong> : Alertes automatisées de piratages et de transferts suspects.</li>
+                                    <li>• <strong>@CertiKAlert</strong> & <strong>@SlowMist_Team</strong> : Audits et alertes de phishing.</li>
+                                    <li>• <strong>@Ledger_Support</strong> : Annonces de faux supports et d'alertes de sécurité.</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+                                <span class="font-bold text-sky-400 block mb-1">Avantage stratégique SISR :</span>
+                                <p class="text-gray-400">
+                                    Permet d'appliquer des mesures proactives (ex: révocation de contrats, blocage d'URLs frauduleuses sur le pare-feu/DNS de l'entreprise) avant que les utilisateurs ne soient compromis.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="container">
-            <p>&copy; 2025 Raymond Chelle. Tous droits réservés.</p>
-        </div>
-    </footer>
+            <!-- Preuves de configuration avec visuels -->
+            <div class="glass-panel rounded-2xl p-6">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Captures d'Écran & Preuves d'Implémentation
+                </h2>
 
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    
+                    <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Feedly</h3>
+                                <p class="text-xs text-gray-400">Collection : Crypto Security & Hardware</p>
+                            </div>
+                            <span class="bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded">Flux RSS</span>
+                        </div>
+                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+                            <img src="Feedly_Collection_Crypto_Security.png" alt="Feedly Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="screenshot-placeholder absolute inset-0 hidden">
+                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <span class="text-xs font-mono">Feedly_Collection_Crypto_Security.png</span>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Project Modals -->
-    <!-- Modal 1 -->
-    <div class="modal fade" id="project1Modal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Programmation Sécurisée</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                         class="img-fluid mb-3" alt="Projet Programmation Sécurisée">
-                    <p>Ce projet scolaire consistait à développer une application web sécurisée en suivant les meilleures pratiques de développement.</p>
-                    <p>J'ai implémenté des fonctionnalités telles que l'authentification à deux facteurs, le chiffrement des données sensibles et la protection contre les injections SQL.</p>
-                    <p><strong>Technologies utilisées :</strong> HTML, CSS, JavaScript, PHP, MySQL</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Google Alerts</h3>
+                                <p class="text-xs text-gray-400">Règles booléennes et filtrage de bruit</p>
+                            </div>
+                            <span class="bg-red-900 text-red-200 text-xs px-2 py-1 rounded">Monitoring</span>
+                        </div>
+                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+                            <img src="GoogleAlerts_Config.png" alt="Google Alerts Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="screenshot-placeholder absolute inset-0 hidden">
+                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                                <span class="text-xs font-mono">GoogleAlerts_Config.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Pocket</h3>
+                                <p class="text-xs text-gray-400">Système d'indexation par étiquettes</p>
+                            </div>
+                            <span class="bg-pink-900 text-pink-200 text-xs px-2 py-1 rounded">Bibliothèque</span>
+                        </div>
+                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+                            <img src="Pocket_Archive_Tagging.png" alt="Pocket Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="screenshot-placeholder absolute inset-0 hidden">
+                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                                <span class="text-xs font-mono">Pocket_Archive_Tagging.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-white">X / Twitter Lists</h3>
+                                <p class="text-xs text-gray-400">Flux épuré : "Crypto Security Watch"</p>
+                            </div>
+                            <span class="bg-sky-900 text-sky-200 text-xs px-2 py-1 rounded">OSINT Temps Réel</span>
+                        </div>
+                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+                            <img src="Twitter_List_CryptoSec.png" alt="Twitter Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="screenshot-placeholder absolute inset-0 hidden">
+                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+                                <span class="text-xs font-mono">Twitter_List_CryptoSec.png</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Modal 2 -->
-    <div class="modal fade" id="project2Modal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Algorithmique Avancée</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- SECTION 3 : TABLEAU HISTORIQUE -->
+        <section id="tableau" class="content-section">
+            <div class="glass-panel rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Historique de Veille (2025 - 2026)</h2>
+                    <span class="bg-violet-900/50 text-violet-300 text-xs px-3 py-1 rounded-full border border-violet-700">12 entrées qualifiées</span>
                 </div>
-                <div class="modal-body">
-                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                         class="img-fluid mb-3" alt="Projet Algorithmique">
-                    <p>Dans le cadre de ce projet, j'ai développé plusieurs algorithmes complexes pour résoudre des problèmes d'optimisation et de traitement de données.</p>
-                    <p>J'ai notamment travaillé sur des algorithmes de tri avancés, des structures de données complexes et des méthodes de recherche efficaces.</p>
-                    <p><strong>Technologies utilisées :</strong> Python, Java, C++</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+
+                <div class="overflow-x-auto rounded-lg border border-slate-700">
+                    <table class="min-w-full divide-y divide-slate-700 text-sm">
+                        <thead class="bg-slate-800 text-gray-400 uppercase font-bold text-xs">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Date</th>
+                                <th class="px-4 py-3 text-left">Source</th>
+                                <th class="px-4 py-3 text-left">Catégorie</th>
+                                <th class="px-4 py-3 text-left w-1/3">Description de l'Événement</th>
+                                <th class="px-4 py-3 text-left">Impact</th>
+                                <th class="px-4 py-3 text-left text-violet-400">Action Proactive SISR</th>
+                                <th class="px-4 py-3 text-center">Lien</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700 bg-slate-900/50 text-gray-300">
+                            <!-- 2025 -->
+                            <tr class="hover:bg-slate-800 transition">
+                                <td class="px-4 py-3 text-gray-500 font-mono">10/01/25</td>
+                                <td class="px-4 py-3">Ledger Blog</td>
+                                <td class="px-4 py-3"><span class="text-blue-400 border border-blue-900 bg-blue-900/20 px-2 py-0.5 rounded text-xs">Patch</span></td>
+                                <td class="px-4 py-3">Correction faille Bluetooth appairage Nano X.</td>
+                                <td class="px-4 py-3 text-yellow-500">Moyen</td>
+                                <td class="px-4 py-3 text-white">MAJ du parc de test des clés physiques.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://www.ledger.com/blog" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition">
+                                <td class="px-4 py-3 text-gray-500 font-mono">17/01/25</td>
+                                <td class="px-4 py-3">CoinDesk</td>
+                                <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs">Phishing</span></td>
+                                <td class="px-4 py-3">Campagne "Fake MetaMask" via régies publicitaires.</td>
+                                <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+                                <td class="px-4 py-3 text-white">Blocage DNS des domaines malveillants identifiés.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://www.coindesk.com/tag/security/" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition">
+                                <td class="px-4 py-3 text-gray-500 font-mono">04/02/25</td>
+                                <td class="px-4 py-3">SlowMist</td>
+                                <td class="px-4 py-3"><span class="text-orange-400 border border-orange-900 bg-orange-900/20 px-2 py-0.5 rounded text-xs">Hack</span></td>
+                                <td class="px-4 py-3">Vulnérabilité MPC (défaut d'entropie des shards).</td>
+                                <td class="px-4 py-3 text-orange-400">Élevé</td>
+                                <td class="px-4 py-3 text-white">Analyse des protocoles TSS multi-parties.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://slowmist.medium.com/" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition">
+                                <td class="px-4 py-3 text-gray-500 font-mono">15/10/25</td>
+                                <td class="px-4 py-3">Trezor Blog</td>
+                                <td class="px-4 py-3"><span class="text-blue-400 border border-blue-900 bg-blue-900/20 px-2 py-0.5 rounded text-xs">Hardware</span></td>
+                                <td class="px-4 py-3">Déploiement du Secure Element EAL6+ sur Trezor Safe 3.</td>
+                                <td class="px-4 py-3 text-gray-400">Info</td>
+                                <td class="px-4 py-3 text-white">Comparatif technique des niveaux d'isolation matérielle.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://blog.trezor.io/" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition">
+                                <td class="px-4 py-3 text-gray-500 font-mono">02/11/25</td>
+                                <td class="px-4 py-3">TheHackerNews</td>
+                                <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs">Malware</span></td>
+                                <td class="px-4 py-3">Infostealer macOS extrayant les coffres d'extensions web.</td>
+                                <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+                                <td class="px-4 py-3 text-white">Mise à jour des signatures EDR sur postes nomades.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://thehackernews.com/search/label/Cryptocurrency" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition">
+                                <td class="px-4 py-3 text-gray-500 font-mono">05/12/25</td>
+                                <td class="px-4 py-3">Unchained Podcast</td>
+                                <td class="px-4 py-3"><span class="text-purple-400 border border-purple-900 bg-purple-900/20 px-2 py-0.5 rounded text-xs">Architecture</span></td>
+                                <td class="px-4 py-3">Gouvernance multi-signatures en entreprise (Fireblocks, Safe).</td>
+                                <td class="px-4 py-3 text-blue-400">Stratégique</td>
+                                <td class="px-4 py-3 text-white">Documentation d'un schéma d'approbation à 3 signataires.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://unchainedcrypto.com/podcasts/" target="_blank" class="table-link">🎙️</a></td>
+                            </tr>
+
+                            <!-- 2026 -->
+                            <tr class="hover:bg-slate-800 transition bg-violet-900/10 border-l-2 border-violet-500">
+                                <td class="px-4 py-3 text-violet-300 font-bold font-mono">15/01/26</td>
+                                <td class="px-4 py-3 text-white">Ledger Blog</td>
+                                <td class="px-4 py-3"><span class="text-green-400 border border-green-900 bg-green-900/20 px-2 py-0.5 rounded text-xs">Clear Signing</span></td>
+                                <td class="px-4 py-3 text-white">Généralisation du standard de Clear Signing face aux "Blind Signatures".</td>
+                                <td class="px-4 py-3 text-green-400">Positif</td>
+                                <td class="px-4 py-3 text-white">Interdiction stricte de la signature aveugle sur le parc.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://www.ledger.com/blog" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition bg-violet-900/10">
+                                <td class="px-4 py-3 text-violet-300 font-mono">08/03/26</td>
+                                <td class="px-4 py-3 text-white">BleepingComputer</td>
+                                <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs">Exploit Off-chain</span></td>
+                                <td class="px-4 py-3 text-white">Détournement d'autorisations Permit2 via typosquatting de dApps.</td>
+                                <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+                                <td class="px-4 py-3 text-white">Procédure systématique de révocation des allowances mensuelle.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://www.bleepingcomputer.com" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition bg-violet-900/10">
+                                <td class="px-4 py-3 text-violet-300 font-mono">22/05/26</td>
+                                <td class="px-4 py-3 text-white">Ethereum Foundation</td>
+                                <td class="px-4 py-3"><span class="text-purple-400 border border-purple-900 bg-purple-900/20 px-2 py-0.5 rounded text-xs">Standard</span></td>
+                                <td class="px-4 py-3 text-white">Spécification de l'EIP-7702 permettant la conversion temporaire d'EOA en Smart Accounts.</td>
+                                <td class="px-4 py-3 text-blue-400">Élevé</td>
+                                <td class="px-4 py-3 text-white">Évaluation des mécanismes de Social Recovery sans phrase de passe.</td>
+                                <td class="px-4 py-3 text-center"><a href="https://eips.ethereum.org" target="_blank" class="table-link">🔗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800 transition bg-violet-900/10">
+                                <td class="px-4 py-3 text-violet-300 font-mono">12/08/26</td>
+                                <td class="px-4 py-3 text-white">NIST & ANSSI</td>
+                                <td class="px-4 py-3"><span class="text-amber-400 border border-amber-900 bg-amber-900/20 px-2 py-0.5 rounded text-xs">PQC</span></td>
+                                <td class="px-4 py-3 text-white">Recommandations de migration des courbes elliptiques (ECDSA/Ed25519) vers ML-DSA.</td>
+                                <td class="px-4 py-3 text-yellow-500">Moyen</td>
+                                <td class="px-4 py-3 text-white">Veille sur la compatibilité des puces cartes à puce (Secure Element).</td>
+                                <td class="px-4 py-3 text-center"><a href="https://www.ssi.gouv.fr" target="_blank" class="table-link">📄</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Modal 3 -->
-    <div class="modal fade" id="project3Modal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Systèmes d'Exploitation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- SECTION 4 : ANALYSE DES TENDANCES -->
+        <section id="analyse" class="content-section">
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Vecteurs d'Attaque (Données 2025-2026)</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Phishing & Signatures Trompeuses (Permit2)</span><span>62%</span></div>
+                                <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width: 62%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Infostealers & Clipbankers OS</span><span>22%</span></div>
+                                <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width: 22%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Vulnérabilités Microprogrammes / Hardware</span><span>16%</span></div>
+                                <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-yellow-500 h-2 rounded-full" style="width: 16%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl bg-gradient-to-br from-violet-900/40 to-slate-900 border-violet-500/30">
+                        <h3 class="text-lg font-bold text-white mb-2 flex items-center">
+                            <span class="bg-white text-violet-900 text-xs font-bold px-2 py-0.5 rounded mr-2">SYNTHÈSE</span> Vision SISR
+                        </h3>
+                        <p class="text-sm text-gray-300 italic">
+                            "En 2026, l'authentification et la détention de la clé privée s'affranchissent du modèle historique des 24 mots. L'enjeu pour l'administrateur d'infrastructure est double : maîtriser les architectures multi-signatures (MPC / Safe) et former les utilisateurs finaux à la vérification systématique des signatures claires (Clear Signing)."
+                        </p>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                         class="img-fluid mb-3" alt="Projet Systèmes d'Exploitation">
-                    <p>Ce projet portait sur l'étude approfondie des systèmes d'exploitation et le développement de composants système.</p>
-                    <p>J'ai travaillé sur la gestion des processus, la mémoire virtuelle, les systèmes de fichiers et les mécanismes de synchronisation.</p>
-                    <p><strong>Technologies utilisées :</strong> C, Linux, Bash</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+
+                <div class="lg:col-span-2 glass-panel p-8 rounded-2xl">
+                    <h2 class="text-3xl font-bold text-white mb-6">Mutations Techniques Majeures</h2>
+                    
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">🛡️</div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white">Transition vers l'Account Abstraction & EIP-7702</h3>
+                                <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+                                    Les portefeuilles EOA traditionnels (Externally Owned Accounts) sont intrinsèquement limités : une clé privée compromise équivaut à la perte définitive des actifs. L'adoption progressive des Smart Accounts permet de définir des politiques de sécurité inspirées de l'Active Directory : limites journalières de dépenses, rôles administrateur/opérateur et mécanisme de <em>Social Recovery</em> avec des gardiens de confiance (sans seed phrase unique).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">🔍</div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white">La fin programmée du "Blind Signing"</h3>
+                                <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+                                    Historiquement, signer une transaction complexe (DeFi, contrats intelligents) affichait des hachages illisibles sur les dispositifs physiques. L'industrie impose désormais le <strong>Clear Signing</strong> : le dispositif matériel interprète et affiche lisiblement le contrat ciblé, l'adresse de destination exacte et les montants avant tout consentement cryptographique.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">⚛️</div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white">Anticipation de la Cryptographie Post-Quantique (PQC)</h3>
+                                <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+                                    Les courbes elliptiques couramment utilisées (Secp256k1) devront être migrées vers des standards résistant aux algorithmes de Shor. Les constructeurs préparent la mise à jour des coprocesseurs sécurisés afin de pouvoir exécuter des algorithmes à base de réseaux euclidiens (NIST ML-DSA).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Bootstrap & jQuery JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SECTION 5 : CONCLUSION & RÉFÉRENTIEL -->
+        <section id="conclusion" class="content-section">
+            <div class="glass-panel rounded-2xl p-8 text-center max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-6">Alignement avec le Référentiel BTS SIO SISR</h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    La sécurisation des portefeuilles et des clés de signature illustre la transposition des principes fondamentaux de la sécurité des systèmes d'information aux environnements distribués.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-4 text-left mt-8 pt-8 border-t border-slate-700">
+                    <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
+                        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 1 - Gestion du Patrimoine</span>
+                        <h4 class="font-bold text-white mt-1 mb-2">Inventaire & Durcissement</h4>
+                        <p class="text-xs text-gray-400">Cartographie des clés privées et HSM. Application stricte des mises à jour de firmwares sur les modules matériels de chiffrement.</p>
+                    </div>
+                    <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
+                        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 2 - Réponse aux Incidents</span>
+                        <h4 class="font-bold text-white mt-1 mb-2">Détection & Isolation</h4>
+                        <p class="text-xs text-gray-400">Procédure de gel d'actifs en cas de compromission d'un poste, révocation d'allowances frauduleuses et blocage des passerelles C2.</p>
+                    </div>
+                    <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
+                        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 3 - Cybersécurité</span>
+                        <h4 class="font-bold text-white mt-1 mb-2">Politique d'Accès & 2FA</h4>
+                        <p class="text-xs text-gray-400">Mise en place de clés FIDO2/U2F (YubiKey) pour éliminer les risques de SIM-swapping lors de l'accès aux interfaces d'administration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
     <script>
-        $(document).ready(function() {
-            // Back to top button
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 100) {
-                    $('.back-to-top').addClass('show');
-                } else {
-                    $('.back-to-top').removeClass('show');
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = [
+                { id: 'accueil', name: 'Accueil' },
+                { id: 'outils', name: 'Méthodo & Outils Détaillés' },
+                { id: 'tableau', name: 'Historique & Suivi' },
+                { id: 'analyse', name: 'Analyse & Tendances' },
+                { id: 'conclusion', name: 'Bilan SISR' }
+            ];
+
+            const navContainer = document.getElementById('desktop-menu');
+
+            function switchSection(id) {
+                document.querySelectorAll('.content-section').forEach(el => {
+                    el.classList.remove('active');
+                    el.style.display = 'none';
+                });
+                
+                const target = document.getElementById(id);
+                target.style.display = 'block';
+                setTimeout(() => target.classList.add('active'), 10);
+
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    if(btn.dataset.target === id) {
+                        btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-medium bg-violet-600 text-white shadow-lg shadow-violet-500/30 transition-all transform scale-105';
+                    } else {
+                        btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-slate-800 transition-all';
+                    }
+                });
+            }
+
+            sections.forEach(s => {
+                const btn = document.createElement('button');
+                btn.innerText = s.name;
+                btn.dataset.target = s.id;
+                btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-slate-800 transition-all';
+                btn.onclick = () => switchSection(s.id);
+                navContainer.appendChild(btn);
             });
-            
-            $('.back-to-top').click(function() {
-                $('html, body').animate({scrollTop: 0}, 800);
-                return false;
-            });
-            
-            // Navbar background change on scroll
-            $(window).scroll(function() {
-                if ($(window).scrollTop() > 50) {
-                    $('.navbar').css('background-color', 'var(--primary-color)');
-                } else {
-                    $('.navbar').css('background-color', 'transparent');
-                }
-            });
-            
-            // Smooth scrolling for navbar links
-            $('.navbar-nav a').on('click', function(event) {
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top - 70
-                    }, 800);
-                }
-            });
-            
-            // CV download button
-            $('#downloadCV').click(function(e) {
-                e.preventDefault();
-                alert('Téléchargement du CV simulé. Dans une implémentation réelle, cela téléchargerait votre CV.');
-            });
-            
-            // Contact form submission
-            $('#contactForm').submit(function(e) {
-                e.preventDefault();
-                alert('Message envoyé avec succès! (simulation)');
-                $('#contactForm')[0].reset();
-            });
+
+            switchSection('accueil');
         });
     </script>
 </body>
