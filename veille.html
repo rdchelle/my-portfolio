@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raymond Chelle - Portfolio</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 600;
+        }
+        
+        .nav-link {
+            margin: 0 10px;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+        
+        .about-content {
+            padding: 80px 0;
+        }
+        
+        .skill-item {
+            margin-bottom: 20px;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .project-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .experience-item {
+            border-left: 2px solid var(--secondary-color);
+            padding-left: 25px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            left: -9px;
+            top: 5px;
+        }
+        
+        .contact-info {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+        }
+        
+        .btn-download {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-download:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+        }
+        
+        .report-card {
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .report-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .report-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Raymond Chelle</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reports">Comptes Rendus</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#veille">Veille</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Raymond Chelle</h1>
+            <p class="lead">Passionné de cybersécurité, prêt à relever les défis informatiques de demain !</p>
+            <a href="#contact" class="btn btn-light btn-lg mt-3">Me contacter</a>
+            <a href="#" class="btn btn-outline-light btn-lg mt-3 ms-2 btn-download" id="downloadCV">Télécharger mon CV</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-content">
+        <div class="container">
+            <h2 class="section-title text-center">À propos de moi</h2>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <img src="pdp.jpg" alt="Raymond Chelle" class="img-fluid rounded-circle">
+                </div>
+                <div class="col-md-8">
+                    <p>Je suis un passionné de cybersécurité avec une solide formation en informatique. Mon parcours académique et mes expériences professionnelles m'ont permis de développer des compétences techniques et relationnelles variées.</p>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Nom :</strong> Raymond Chelle</li>
+                                <li><strong>Email :</strong> chelleraymond05@gmail.com</li>
+                                <li><strong>Téléphone :</strong> 07 85 65 78 94</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Âge :</strong> 18 ans</li>
+                                <li><strong>Localisation :</strong> Gap, Hautes-Alpes</li>
+                                <li><strong>Nationalité :</strong> Française</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="mt-3">Je suis rigoureux, précis dans mon travail et capable de suivre des protocoles stricts. Mes centres d'intérêt incluent le sport en général et les échecs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Mes compétences</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="skill-item">
+                        <h5>Communication efficace</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Travail d'équipe</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Gestion des conflits</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="skill-item">
+                        <h5>Rigueur et précision</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Gestion des incidents</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <h5>Suivi des procédures de sécurité</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Mes projets</h2>
+            <div class="row">
+                <!-- Project 1 -->
+                <div class="col-md-4">
+                    <div class="card project-card">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                             class="card-img-top project-img" alt="Projet Programmation Sécurisée">
+                        <div class="card-body">
+                            <h5 class="card-title">Programmation Sécurisée</h5>
+                            <p class="card-text">Projet scolaire sur le développement d'applications sécurisées avec les meilleures pratiques.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project1Modal">
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="col-md-4">
+                    <div class="card project-card">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                             class="card-img-top project-img" alt="Projet Algorithmique">
+                        <div class="card-body">
+                            <h5 class="card-title">Algorithmique Avancée</h5>
+                            <p class="card-text">Développement d'algorithmes complexes pour résoudre des problèmes informatiques.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project2Modal">
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="col-md-4">
+                    <div class="card project-card">
+                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                             class="card-img-top project-img" alt="Projet Systèmes d'Exploitation">
+                        <div class="card-body">
+                            <h5 class="card-title">Systèmes d'Exploitation</h5>
+                            <p class="card-text">Étude approfondie des systèmes d'exploitation et développement de composants système.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project3Modal">
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports Section -->
+    <section id="reports" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Comptes Rendus de TP</h2>
+            
+            <!-- BLOCS Section -->
+            <h3 class="mt-5 mb-4">TP de BLOCS</h3>
+            <div class="row">
+                <!-- TP BLOCS 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 1 - Paramétrage du matériel informatique</h5>
+                            <p class="card-text">Rapport sur la configuration réseau, incluant un schéma réseau et un tutoriel.</p>
+                            <a href="rapports/informatique.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP BLOCS 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 2 - Activité Classic Maze</h5>
+                            <p class="card-text">Rapport sur programmation (Scratch)</p>
+                            <a href="rapports/mazee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP BLOCS 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 3 - Mes premiers pas en Java</h5>
+                            <p class="card-text">Rapport sur programmation (Java)</p>
+                            <a href="rapports/java.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP BLOCS 4 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 4 - Les logiciels de capture d'écran</h5>
+                            <p class="card-text">Rapport sur les logiciels de capture d'écran</p>
+                            <a href="rapports/ecrann.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP BLOCS 5 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP BLOCS 5 - Java</h5>
+                            <p class="card-text">Rapport sur programmation (Java)</p>
+                            <a href="rapports/javaaaquiz.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP BLOCS 6 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TD1 : Cybersécurité</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/cyberrrr.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 7 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Les commandes</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/commandee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 8 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Le serveur NAS</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/nas.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 9 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 05 : Exercices JAVA</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/5exjava.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 10 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : TechCorp</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/techcorp.docx.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 11 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Fonctions et Procédures</h5>
+                            <p class="card-text">Rapport sur sur programmation (Java)</p>
+                            <a href="rapports/fonctions.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 12 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : PIA 1 </h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/pia1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 13 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : PIA 2</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/pia2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 14 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TD 01 : Bloc 3</h5>
+                            <p class="card-text">Cybersécurité</p>
+                            <a href="rapports/mabanque.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 15 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Bataille Navale</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/bataille.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 16 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Classe Livre et Compte</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/classde.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 17 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Base de données Leclerc</h5>
+                            <p class="card-text">Rapport sur la création et gestion d'une base de données relationnelle</p>
+                            <a href="rapports/leclerc.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 18 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Scénario Linux</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/senario.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 19 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Prise de contrôle à distance</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/distance.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 20 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Partitionnement de disques durs</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/partition.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 21 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Kali : John The Ripper</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/kalilive.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 22 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : CH4 TD2</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/brillattt.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 23 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : WAKE ON LAN</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/WOL.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 24 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Serveur 2003</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/serveur2003.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 25 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Clonage</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/clonageee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 26 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : HFS</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/hfs.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 27 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Active Directory</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/uoo.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 28 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : LECLERC 2</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/leclerc2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 29 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Gestionnaire de sauvegarde</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/sauvegarde.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 30 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : BDD ZOO</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/zooo.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 31 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Keylogger</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/keyloggerr.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 32 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : PHP 1</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/php1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 33 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Kit du Technicien</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/technicien-1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 34 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : TD3 Veille M@Banque</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/td3.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 35 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : ANSSI</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/anssi.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP BLOCS 36 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Deep Freeze</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/tp16_deepfreeze.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP :Protection Serveur Web</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/protection.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP :Switch Manageable</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/switchh.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : Base de données</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/bddgsb.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : DHCP</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/dhcpp.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP : GPO</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/gpo.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TD7: Gérer les accès et les privilèges appropriés </h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/td7_cyb.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TD8: Packet Tracer </h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/packet.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP: Base PHP </h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/php3.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP: Programmer avec PHP </h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/php2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP: Transmission de données </h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/php4.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ATELIER DE PROFESSIONNALISATION Section -->
+            <h3 class="mt-5 mb-4">TP d'ATELIER DE PROFESSIONNALISATION</h3>
+            <div class="row">
+                <!-- TP ATELIER 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP ATELIER 1 - Création du portfolio (HTML)</h5>
+                            <p class="card-text">Compte rendu du développement du site.</p>
+                            <a href="rapports/atelier1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP02 : Les logiciels de diagnostic</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/ordii.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP03 : Le HTML</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/htmlzez.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 4 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 04 : les bases du CSS</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/csss.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 5 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 05 : CSS Avancé 1/2</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/css1.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 6 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 06 : Shifumi</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/shifumi.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 7 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 07 : CSS Avancé 2/2</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/css2.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 8 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 08 : Formulaire</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/formulaire.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 9 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 09 : Responsive Design</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/responsive.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 10 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 10 : Site Vitrine</h5>
+                            <p class="card-text">Manipulation d'un logiciel WYSIWYG</p>
+                            <a href="rapports/sitevitrinee.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 11 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 11 : Hébergement du site</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/hebergementtt.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TP ATELIER 12 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card report-card h-100">
+                        <div class="card-body text-center">
+                            <div class="report-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h5 class="card-title">TP 12 : Transfert du site</h5>
+                            <p class="card-text"></p>
+                            <a href="rapports/transfert.pdf" class="btn btn-primary" target="_blank">Voir le PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Veille Technologique Section -->
+    <section id="veille" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Veille Technologique</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card report-card border-0 shadow-sm p-4 text-center">
+                        <div class="report-icon">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h4 class="card-title fw-bold">Sécurisation des Portefeuilles Crypto[cite: 2]</h4>
+                        <p class="text-muted mb-3">BTS SIO SISR – Suivi des vulnérabilités, architectures multi-parties (MPC), Clear Signing et protocoles matériels[cite: 2].</p>
+                        <p class="card-text">
+                            Consultez la veille complète : méthodologie détaillée de collecte (Feedly, Google Alerts, Pocket, X/Twitter), tableau chronologique des failles et analyse prospective[cite: 2].
+                        </p>
+                        <div class="mt-3">
+                            <a href="veille.html" class="btn btn-primary btn-lg px-4" target="_blank">
+                                <i class="fas fa-external-link-alt me-2"></i>Consulter la veille
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Mon expérience</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Experience 1 -->
+                    <div class="experience-item">
+                        <h4>Serveur</h4>
+                        <h5>Le Jasmin Embrun</h5>
+                        <p class="text-muted">Juillet 2025 - Août 2025</p>
+                        <ul>
+                            <li>Accueil et prise en charge des clients</li>
+                            <li>Gestion des incidents et des demandes des clients</li>
+                            <li>Suivi des procédures de sécurité</li>
+                            <li>Travail en équipe</li>
+                            <li>Gestion des paiements et des encaissements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Formation</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Education 1 -->
+                    <div class="experience-item">
+                        <h4>BTS SIO</h4>
+                        <h5>Dominique Villars Gap</h5>
+                        <p class="text-muted">Septembre 2025 - Juin 2027</p>
+                        <p>Projets scolaires sur la programmation sécurisée, notes élevées, matières principales : Algorithmique, Systèmes d'exploitation</p>
+                    </div>
+                    <!-- Education 2 -->
+                    <div class="experience-item">
+                        <h4>Baccalauréat Général (Mathématiques et Physique)</h4>
+                        <h5>Lycée Dominique Villars Gap</h5>
+                        <p class="text-muted">Septembre 2022 - Juin 2025</p>
+                        <p>Mention Assez Bien</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Contactez-moi</h2>
+            <div class="row">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="contact-info">
+                        <h4>Coordonnées</h4>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 6 Rue de Saint-Mens, Gap (05000)</p>
+                        <p><i class="fas fa-phone me-2"></i> 07 85 65 78 94</p>
+                        <p><i class="fas fa-envelope me-2"></i> chelleraymond05@gmail.com</p>
+                        
+                        <div class="social-icons mt-4">
+                            <h4>Réseaux sociaux</h4>
+                            <a href="https://www.linkedin.com/in/raymond-chelle-477517382" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/rdchelle" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://instagram.com/rdchelle7_" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Votre nom" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Votre email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Sujet">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Votre message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 Raymond Chelle. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Project Modals -->
+    <!-- Modal 1 -->
+    <div class="modal fade" id="project1Modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Programmation Sécurisée</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         class="img-fluid mb-3" alt="Projet Programmation Sécurisée">
+                    <p>Ce projet scolaire consistait à développer une application web sécurisée en suivant les meilleures pratiques de développement.</p>
+                    <p>J'ai implémenté des fonctionnalités telles que l'authentification à deux facteurs, le chiffrement des données sensibles et la protection contre les injections SQL.</p>
+                    <p><strong>Technologies utilisées :</strong> HTML, CSS, JavaScript, PHP, MySQL</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="project2Modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Algorithmique Avancée</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         class="img-fluid mb-3" alt="Projet Algorithmique">
+                    <p>Dans le cadre de ce projet, j'ai développé plusieurs algorithmes complexes pour résoudre des problèmes d'optimisation et de traitement de données.</p>
+                    <p>J'ai notamment travaillé sur des algorithmes de tri avancés, des structures de données complexes et des méthodes de recherche efficaces.</p>
+                    <p><strong>Technologies utilisées :</strong> Python, Java, C++</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="project3Modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Systèmes d'Exploitation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         class="img-fluid mb-3" alt="Projet Systèmes d'Exploitation">
+                    <p>Ce projet portait sur l'étude approfondie des systèmes d'exploitation et le développement de composants système.</p>
+                    <p>J'ai travaillé sur la gestion des processus, la mémoire virtuelle, les systèmes de fichiers et les mécanismes de synchronisation.</p>
+                    <p><strong>Technologies utilisées :</strong> C, Linux, Bash</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Back to top button
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.back-to-top').addClass('show');
+                } else {
+                    $('.back-to-top').removeClass('show');
+                }
+            });
+            
+            $('.back-to-top').click(function() {
+                $('html, body').animate({scrollTop: 0}, 800);
+                return false;
+            });
+            
+            // Navbar background change on scroll
+            $(window).scroll(function() {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').css('background-color', 'var(--primary-color)');
+                } else {
+                    $('.navbar').css('background-color', 'transparent');
+                }
+            });
+            
+            // Smooth scrolling for navbar links
+            $('.navbar-nav a').on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top - 70
+                    }, 800);
+                }
+            });
+            
+            // CV download button
+            $('#downloadCV').click(function(e) {
+                e.preventDefault();
+                alert('Téléchargement du CV simulé. Dans une implémentation réelle, cela téléchargerait votre CV.');
+            });
+            
+            // Contact form submission
+            $('#contactForm').submit(function(e) {
+                e.preventDefault();
+                alert('Message envoyé avec succès! (simulation)');
+                $('#contactForm')[0].reset();
+            });
+        });
+    </script>
+</body>
+</html>
