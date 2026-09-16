@@ -1,666 +1,691 @@
 <!DOCTYPE html>
 <html lang="fr" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veille SISR – Sécurisation Wallets Crypto</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkblue: '#0F172A', 
-                        cyber: '#1E293B',
-                        violet: '#8B5CF6',
-                        accent: '#38BDF8',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .content-section {
-            display: none;
-            opacity: 0;
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .screenshot-placeholder {
-            border: 2px dashed #475569;
-            background-color: #1e293b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: #94a3b8;
-            transition: all 0.3s;
-        }
-        .screenshot-placeholder:hover {
-            border-color: #8B5CF6;
-            color: #8B5CF6;
-        }
-        
-        .table-link {
-            color: #94a3b8;
-            transition: color 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            padding: 4px;
-        }
-        .table-link:hover {
-            color: #8B5CF6;
-            transform: scale(1.1);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille SISR – Sécurisation Wallets Crypto</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'] } } } }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f172a; --panel: rgba(30,41,59,.7); --border: rgba(255,255,255,.1);
+    --text: #f1f5f9; --muted: #94a3b8;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  body { font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; background: var(--bg); }
+  .glass-panel{background:var(--panel);backdrop-filter:blur(12px);border:1px solid var(--border);box-shadow:0 4px 30px rgba(0,0,0,.5)}
+  .content-section{display:none;opacity:0;animation:fadeIn .4s ease-out forwards}
+  .content-section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .screenshot-placeholder{border:2px dashed #475569;background:#1e293b;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#94a3b8;transition:all .3s}
+  .screenshot-placeholder:hover{border-color:#8b5cf6;color:#8b5cf6}
+  .table-link{color:#94a3b8;transition:color .2s;text-decoration:none;display:inline-block;padding:4px}
+  .table-link:hover{color:#a78bfa}
+  .scroll-x{overflow-x:auto}
+  table{max-width:100%}
+  .filter-btn.on{background:#7c3aed;color:#fff}
+  img{max-width:100%}
+</style>
 </head>
-<body class="bg-slate-900 text-gray-100 min-h-screen flex flex-col">
+<body class="text-gray-100 min-h-screen flex flex-col">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-slate-900/95 border-b border-gray-800 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/20">
-                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight">Veille<span class="text-violet-400">SISR</span></span>
-                </div>
-
-                <div class="hidden md:flex space-x-1" id="desktop-menu"></div>
-
-                <div class="hidden md:block px-3 py-1 rounded-full bg-green-900/30 border border-green-500/30 text-green-400 text-xs font-semibold flex items-center gap-2">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    MAJ : Septembre 2026
-                </div>
-            </div>
+<nav class="fixed w-full z-50 bg-slate-900/95 border-b border-gray-800 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 gap-4">
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-8 h-8 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/20">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
-    </nav>
+        <span class="font-bold text-xl tracking-tight">Veille<span class="text-violet-400">SISR</span></span>
+      </div>
+      <div class="hidden md:flex space-x-1 flex-wrap justify-center" id="desktop-menu"></div>
+      <div class="hidden lg:flex px-3 py-1 rounded-full bg-green-900/30 border border-green-500/30 text-green-400 text-xs font-semibold items-center gap-2 shrink-0">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        MAJ : septembre 2026
+      </div>
+    </div>
+    <div class="md:hidden flex gap-1 overflow-x-auto pb-2" id="mobile-menu"></div>
+  </div>
+</nav>
 
-    <main class="max-w-7xl mx-auto pt-24 pb-12 px-4 sm:px-6 lg:px-8 flex-grow">
-        
-        <!-- SECTION 1 : ACCUEIL -->
-        <section id="accueil" class="content-section active">
-            <div class="glass-panel rounded-2xl p-8 mb-8">
-                <div class="border-l-4 border-violet-500 pl-6 mb-8">
-                    <h1 class="text-4xl font-extrabold text-white mb-2">
-                        Sécurisation des Portefeuilles Crypto & Clés Privées
-                    </h1>
-                    <p class="text-lg text-gray-400">
-                        Veille Technologique & Réglementaire – BTS SIO Option SISR
-                    </p>
-                </div>
+<main class="max-w-7xl mx-auto pt-28 pb-12 px-4 sm:px-6 lg:px-8 flex-grow w-full">
 
-                <div class="grid md:grid-cols-2 gap-6 mt-8">
-                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 transition-colors">
-                        <h3 class="text-xl font-bold text-white mb-3 flex items-center">
-                            <span class="text-violet-400 mr-2">📌</span> Sujet & Enjeux d'Infrastructure
-                        </h3>
-                        <p class="text-gray-300 text-sm leading-relaxed">
-                            Les portefeuilles numériques (Hardware Wallets, MPC, Smart Contract Wallets) gèrent la cryptographie asymétrique et la détention des clés privées. Dans le cadre d'infrastructures d'entreprises et de Web3, ils représentent un <strong>Single Point of Failure (SPOF)</strong> critique. L'enjeu est de neutraliser les attaques d'ingénierie sociale (drainers, signature poisoning), les malwares infostealers et les compromissions de firmwares.
-                        </p>
-                    </div>
-                    <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 transition-colors">
-                        <h3 class="text-xl font-bold text-white mb-3 flex items-center">
-                            <span class="text-violet-400 mr-2">🎯</span> Périmètre & Objectifs
-                        </h3>
-                        <p class="text-gray-300 text-sm leading-relaxed">
-                            1. <strong>Surveillance des failles :</strong> Vulnérabilités de microprogrammes, attaques par canaux auxiliaires (Side-Channel) et malwares d'extraction.<br>
-                            2. <strong>Évolution des standards :</strong> Adoption de l'Account Abstraction (ERC-4337), des signatures EIP-7702 et de la cryptographie post-quantique.<br>
-                            3. <strong>Durcissement opérationnel :</strong> Établissement de procédures de gestion d'actifs numériques applicables en entreprise.
-                        </p>
-                    </div>
-                </div>
+<!-- ACCUEIL -->
+<section id="accueil" class="content-section active">
+  <div class="glass-panel rounded-2xl p-8 mb-8">
+    <div class="border-l-4 border-violet-500 pl-6 mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">Sécurisation des portefeuilles crypto &amp; des clés privées</h1>
+      <p class="text-lg text-gray-400">Veille technologique et réglementaire – BTS SIO option SISR</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+        <h3 class="text-xl font-bold text-white mb-3">📌 Sujet &amp; enjeux d'infrastructure</h3>
+        <p class="text-gray-300 text-sm leading-relaxed">Les portefeuilles numériques (hardware wallets, MPC, smart contract wallets) gèrent la cryptographie asymétrique et la détention des clés privées. En entreprise comme en Web3, ils constituent un <strong>point unique de défaillance (SPOF)</strong>. L'enjeu est de neutraliser l'ingénierie sociale (drainers, empoisonnement de signature), les infostealers et les compromissions de chaîne d'approvisionnement logicielle.</p>
+      </div>
+      <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+        <h3 class="text-xl font-bold text-white mb-3">🎯 Périmètre &amp; objectifs</h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          1. <strong>Surveillance des failles :</strong> microprogrammes, canaux auxiliaires, malwares d'extraction, paquets npm compromis.<br>
+          2. <strong>Évolution des standards :</strong> abstraction de compte (ERC-4337, EIP-7702), clear signing, cryptographie post-quantique.<br>
+          3. <strong>Durcissement opérationnel :</strong> procédures de gestion des clés transposables à un SI d'entreprise.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTILS -->
+<section id="outils" class="content-section">
+  <div class="glass-panel rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-white mb-6">Cycle opérationnel hebdomadaire</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-blue-500">
+        <span class="text-xs font-bold text-blue-400 uppercase">Lundi (35 min) – Collecte</span>
+        <h4 class="text-white font-bold mt-1">Filtrage RSS &amp; alertes</h4>
+        <p class="text-gray-400 text-sm mt-2">Dépouillement des flux Feedly, revue des Google Alerts, tri des faux positifs.</p>
+      </div>
+      <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-violet-500">
+        <span class="text-xs font-bold text-violet-400 uppercase">Mercredi (45 min) – Traitement</span>
+        <h4 class="text-white font-bold mt-1">Analyse technique</h4>
+        <p class="text-gray-400 text-sm mt-2">Lecture des avis CERT-FR et des rapports d'audit, qualification de l'impact.</p>
+      </div>
+      <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-green-500">
+        <span class="text-xs font-bold text-green-400 uppercase">Vendredi (20 min) – Restitution</span>
+        <h4 class="text-white font-bold mt-1">Synthèse &amp; actions</h4>
+        <p class="text-gray-400 text-sm mt-2">Saisie dans le tableau de suivi, formalisation des recommandations, archivage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-panel rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-white mb-2">Détail technique des outils &amp; paramétrages</h2>
+    <p class="text-sm text-gray-400 mb-6">Chaque outil occupe un rôle précis dans la chaîne d'acquisition (pull, push, stockage, alerte).</p>
+
+    <div class="space-y-6">
+      <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span class="px-2.5 py-1 text-xs font-bold rounded bg-emerald-900/60 text-emerald-300 border border-emerald-500/30">Agrégateur RSS</span>
+          <h3 class="text-xl font-bold text-white">Feedly – flux de vulnérabilités</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+            <span class="font-bold text-violet-400 block mb-1">Dossiers paramétrés :</span>
+            <ul class="list-disc list-inside space-y-1 text-gray-300">
+              <li><code>#CERT-FR</code> : avis et alertes de l'ANSSI.</li>
+              <li><code>#CyberSec-FR</code> : Zataz, IT-Connect, Le Monde Informatique, Numerama Cyberguerre, Silicon.fr.</li>
+              <li><code>#Crypto-FR</code> : Cryptoast, Journal du Coin, CoinAcademy, Cointribune.</li>
+              <li><code>#Constructeurs</code> : blog Ledger, blog Trezor, Kaspersky Daily FR.</li>
+            </ul>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+            <span class="font-bold text-violet-400 block mb-1">Mots-clés surlignés :</span>
+            <div class="flex flex-wrap gap-1 mt-2">
+              <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">firmware</span>
+              <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">phrase de récupération</span>
+              <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">signature aveugle</span>
+              <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">drainer</span>
+              <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">infostealer</span>
+              <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">post-quantique</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
 
-        <!-- SECTION 2 : OUTILS ET MÉTHODOLOGIE DÉTAILLÉE -->
-        <section id="outils" class="content-section">
-            
-            <!-- Processus hebdomadaire -->
-            <div class="glass-panel rounded-2xl p-6 mb-8">
-                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
-                    <svg class="w-6 h-6 mr-3 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Cycle Opérationnel Hebdomadaire
-                </h2>
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-blue-500">
-                        <span class="text-xs font-bold text-blue-400 uppercase">Lundi (35 min) – Collecte & Push</span>
-                        <h4 class="text-white font-bold mt-1">Filtrage RSS & Alertes</h4>
-                        <p class="text-gray-400 text-sm mt-2">Dépouillement des flux Feedly (dossier Sécurité), passage en revue des notifications Google Alerts et tri rapide des faux positifs.</p>
-                    </div>
-                    <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-violet-500">
-                        <span class="text-xs font-bold text-violet-400 uppercase">Mercredi (45 min) – Traitement</span>
-                        <h4 class="text-white font-bold mt-1">Analyse Technique</h4>
-                        <p class="text-gray-400 text-sm mt-2">Lecture détaillée des CVE et whitepapers sauvegardés sur Pocket, vérification de la reproductibilité et qualification de l'impact (faible / critique).</p>
-                    </div>
-                    <div class="bg-slate-800/50 p-4 rounded-lg border-t-2 border-green-500">
-                        <span class="text-xs font-bold text-green-400 uppercase">Vendredi (20 min) – Restitution</span>
-                        <h4 class="text-white font-bold mt-1">Synthèse & Actions</h4>
-                        <p class="text-gray-400 text-sm mt-2">Enregistrement dans le tableau de bord, formalisation de recommandations (patchs, règles de filtrage EDR) et archivage pérenne.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span class="px-2.5 py-1 text-xs font-bold rounded bg-red-900/60 text-red-300 border border-red-500/30">Monitoring passif</span>
+          <h3 class="text-xl font-bold text-white">Google Alerts – détection d'incidents</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+            <span class="font-bold text-red-400 block mb-1">Requêtes actives :</span>
+            <ul class="space-y-1 font-mono text-gray-300">
+              <li>• <code>"portefeuille matériel" AND ("faille" OR "vulnérabilité")</code></li>
+              <li>• <code>"wallet drainer" OR "vol de cryptomonnaies" site:.fr</code></li>
+              <li>• <code>ANSSI AND "post-quantique"</code></li>
+            </ul>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+            <span class="font-bold text-red-400 block mb-1">Paramètres :</span>
+            <ul class="space-y-1 text-gray-400">
+              <li>• <strong>Fréquence :</strong> digest hebdomadaire du lundi.</li>
+              <li>• <strong>Langue :</strong> français ; région : France.</li>
+              <li>• <strong>Qualité :</strong> seulement les meilleurs résultats.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-            <!-- Fiche détaillée des outils utilisés -->
-            <div class="glass-panel rounded-2xl p-6 mb-8">
-                <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
-                    <svg class="w-6 h-6 mr-3 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
-                    Détail Technique des Outils & Paramétrages
-                </h2>
-                <p class="text-sm text-gray-400 mb-6">
-                    Pour garantir une veille rigoureuse sans surcharge informationnelle, chaque outil a un rôle précis dans la chaîne d'acquisition (Pull, Push, Stockage, Alerte).
-                </p>
+      <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span class="px-2.5 py-1 text-xs font-bold rounded bg-pink-900/60 text-pink-300 border border-pink-500/30">Stockage &amp; qualification</span>
+          <h3 class="text-xl font-bold text-white">Système de taxonomie par étiquettes</h3>
+        </div>
+        <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60 text-xs">
+          <div class="grid sm:grid-cols-4 gap-2">
+            <div class="bg-slate-800 p-2 rounded"><span class="font-mono text-pink-300 font-bold">#A_Traiter</span><p class="text-gray-400 mt-1">En attente de lecture approfondie.</p></div>
+            <div class="bg-slate-800 p-2 rounded"><span class="font-mono text-blue-300 font-bold">#Materiel</span><p class="text-gray-400 mt-1">Élément sécurisé, microcontrôleurs, firmwares.</p></div>
+            <div class="bg-slate-800 p-2 rounded"><span class="font-mono text-amber-300 font-bold">#Standards</span><p class="text-gray-400 mt-1">ERC-4337, EIP-7702, MPC/TSS, PQC.</p></div>
+            <div class="bg-slate-800 p-2 rounded"><span class="font-mono text-red-300 font-bold">#Menaces</span><p class="text-gray-400 mt-1">Drainers, phishing, chaîne d'approvisionnement.</p></div>
+          </div>
+        </div>
+      </div>
 
-                <div class="space-y-6">
-                    <!-- Outil 1 : Feedly -->
-                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-emerald-900/60 text-emerald-300 border border-emerald-500/30">Agrégateur RSS (Push/Pull)</span>
-                                <h3 class="text-xl font-bold text-white">Feedly – Flux de Vulnérabilités & Mises à Jour</h3>
-                            </div>
-                            <span class="text-xs text-gray-400 font-mono">feedly.com</span>
-                        </div>
-                        <p class="text-sm text-gray-300 mb-3">
-                            Feedly est configuré comme tour de contrôle principale. Il regroupe les flux RSS officiels des constructeurs de portefeuilles, des revues de cybersécurité et des laboratoires de recherche.
-                        </p>
-                        <div class="grid md:grid-cols-2 gap-4 text-xs">
-                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
-                                <span class="font-bold text-violet-400 block mb-1">Dossiers / Catégories paramétrés :</span>
-                                <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                    <li><code>#Hardware-Security</code> : Ledger Blog, Trezor Release Notes, Yubico Blog.</li>
-                                    <li><code>#CyberSec-Core</code> : The Hacker News, BleepingComputer, CERT-FR (ANSSI).</li>
-                                    <li><code>#Web3-Audits</code> : SlowMist News, CertiK Research, OpenZeppelin Blog.</li>
-                                </ul>
-                            </div>
-                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
-                                <span class="font-bold text-violet-400 block mb-1">Filtres de pertinence & Mots-clés prioritaires :</span>
-                                <p class="text-gray-400 mb-1">Surveillance prioritaire avec surlignage des mots-clés suivants :</p>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">firmware exploit</span>
-                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">seed phrase leak</span>
-                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">side-channel</span>
-                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">stealer</span>
-                                    <span class="px-1.5 py-0.5 bg-slate-800 text-gray-300 rounded font-mono">MPC vulnerability</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span class="px-2.5 py-1 text-xs font-bold rounded bg-sky-900/60 text-sky-300 border border-sky-500/30">Alerte temps réel</span>
+          <h3 class="text-xl font-bold text-white">Liste X « CryptoSec » &amp; comptes suivis</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+            <span class="font-bold text-sky-400 block mb-1">Comptes suivis :</span>
+            <ul class="space-y-1 text-gray-300">
+              <li>• <strong>@ZachXBT</strong> – enquêtes on-chain indépendantes.</li>
+              <li>• <strong>@PeckShieldAlert</strong> – alertes automatisées de piratage.</li>
+              <li>• <strong>@SlowMist_Team</strong> – audits et alertes de phishing.</li>
+              <li>• <strong>@CERT_FR</strong> – avis et alertes officiels français.</li>
+            </ul>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
+            <span class="font-bold text-sky-400 block mb-1">Intérêt pour un administrateur SISR :</span>
+            <p class="text-gray-400">Appliquer des mesures conservatoires (blocage DNS, révocation d'autorisations, mise en quarantaine d'un poste) avant la publication des bulletins officiels.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                    <!-- Outil 2 : Google Alerts & Dorks -->
-                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-red-900/60 text-red-300 border border-red-500/30">Monitoring Passif (Push Email)</span>
-                                <h3 class="text-xl font-bold text-white">Google Alerts – Détection d'Incidents & Dorks</h3>
-                            </div>
-                            <span class="text-xs text-gray-400 font-mono">google.com/alerts</span>
-                        </div>
-                        <p class="text-sm text-gray-300 mb-3">
-                            Google Alerts est exploité pour remonter les publications non couvertes par les flux RSS classiques (articles académiques, annonces judiciaires de saisies/hacks et dépôts GitHub contenant des POCs d'exploits).
-                        </p>
-                        <div class="grid md:grid-cols-2 gap-4 text-xs">
-                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
-                                <span class="font-bold text-red-400 block mb-1">Requêtes booléennes actives :</span>
-                                <ul class="space-y-1 font-mono text-gray-300">
-                                    <li>• <code>"hardware wallet" AND ("CVE" OR "vulnerability" OR "bypass")</code></li>
-                                    <li>• <code>"MetaMask" OR "Phantom" AND ("drainer" OR "malicious permit")</code></li>
-                                    <li>• <code>"ERC-4337" AND ("exploit" OR "security flaw")</code></li>
-                                </ul>
-                            </div>
-                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
-                                <span class="font-bold text-red-400 block mb-1">Paramètres de distribution :</span>
-                                <ul class="space-y-1 text-gray-400">
-                                    <li>• <strong>Fréquence :</strong> 1 fois par semaine (digest du lundi matin pour éviter la saturation).</li>
-                                    <li>• <strong>Sources :</strong> Actualités, Blogs et Livres/Discussions.</li>
-                                    <li>• <strong>Qualité :</strong> "Seulement les meilleurs résultats".</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+  <div class="glass-panel rounded-2xl p-6">
+    <h2 class="text-2xl font-bold text-white mb-6">Captures d'écran &amp; preuves d'implémentation</h2>
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-lg text-white mb-3">Feedly – collection « Crypto Security »</h3>
+        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+          <img src="Feedly_Collection_Crypto_Security.png" alt="Configuration Feedly" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screenshot-placeholder absolute inset-0 hidden"><span class="text-xs font-mono">Feedly_Collection_Crypto_Security.png</span></div>
+        </div>
+      </div>
+      <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-lg text-white mb-3">Google Alerts – règles de filtrage</h3>
+        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+          <img src="GoogleAlerts_Config.png" alt="Configuration Google Alerts" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screenshot-placeholder absolute inset-0 hidden"><span class="text-xs font-mono">GoogleAlerts_Config.png</span></div>
+        </div>
+      </div>
+      <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-lg text-white mb-3">Bibliothèque – indexation par étiquettes</h3>
+        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+          <img src="Pocket_Archive_Tagging.png" alt="Étiquetage" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screenshot-placeholder absolute inset-0 hidden"><span class="text-xs font-mono">Pocket_Archive_Tagging.png</span></div>
+        </div>
+      </div>
+      <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-lg text-white mb-3">Liste X « Crypto Security Watch »</h3>
+        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
+          <img src="Twitter_List_CryptoSec.png" alt="Liste X" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screenshot-placeholder absolute inset-0 hidden"><span class="text-xs font-mono">Twitter_List_CryptoSec.png</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    <!-- Outil 3 : Pocket -->
-                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-pink-900/60 text-pink-300 border border-pink-500/30">Stockage & Qualification</span>
-                                <h3 class="text-xl font-bold text-white">Pocket & Système de Taxonomie par Tags</h3>
-                            </div>
-                            <span class="text-xs text-gray-400 font-mono">getpocket.com</span>
-                        </div>
-                        <p class="text-sm text-gray-300 mb-3">
-                            Pocket sert de sas de décompression entre la découverte d'un article et son exploitation effective. Il évite le phénomène de dispersion en permettant une lecture hors-ligne sans publicité ni distractions.
-                        </p>
-                        <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60 text-xs">
-                            <span class="font-bold text-pink-400 block mb-2">Structure des étiquettes (Tags) de qualification :</span>
-                            <div class="grid sm:grid-cols-4 gap-2">
-                                <div class="bg-slate-800 p-2 rounded">
-                                    <span class="font-mono text-pink-300 font-bold">#A_Traiter</span>
-                                    <p class="text-gray-400 mt-1">Articles sauvegardés en attente d'une lecture approfondie.</p>
-                                </div>
-                                <div class="bg-slate-800 p-2 rounded">
-                                    <span class="font-mono text-blue-300 font-bold">#Hardware</span>
-                                    <p class="text-gray-400 mt-1">Failles physiques, chips SE (Secure Element), microcontrôleurs.</p>
-                                </div>
-                                <div class="bg-slate-800 p-2 rounded">
-                                    <span class="font-mono text-amber-300 font-bold">#MPC_AA</span>
-                                    <p class="text-gray-400 mt-1">Innovations Smart Wallets, ERC-4337, partage de clés TSS.</p>
-                                </div>
-                                <div class="bg-slate-800 p-2 rounded">
-                                    <span class="font-mono text-red-300 font-bold">#Phishing_Threat</span>
-                                    <p class="text-gray-400 mt-1">Attaques d'ingénierie sociale, kits drainers, faux stores d'apps.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<!-- HISTORIQUE & SUIVI -->
+<section id="tableau" class="content-section">
 
-                    <!-- Outil 4 : X / Twitter OSINT -->
-                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2.5 py-1 text-xs font-bold rounded bg-sky-900/60 text-sky-300 border border-sky-500/30">Alerte Temps Réel & OSINT</span>
-                                <h3 class="text-xl font-bold text-white">X (ex-Twitter) – Listes Dédiées "CryptoSec"</h3>
-                            </div>
-                            <span class="text-xs text-gray-400 font-mono">x.com/lists</span>
-                        </div>
-                        <p class="text-sm text-gray-300 mb-3">
-                            Dans le monde décentralisé, les annonces de zero-day ou d'attaques à grande échelle sont divulguées sur X des heures avant les communiqués de presse ou les bases CVE.
-                        </p>
-                        <div class="grid md:grid-cols-2 gap-4 text-xs">
-                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
-                                <span class="font-bold text-sky-400 block mb-1">Comptes audités & suivis :</span>
-                                <ul class="space-y-1 text-gray-300">
-                                    <li>• <strong>@ZachXBT</strong> : Enquêteur On-Chain indépendant de référence.</li>
-                                    <li>• <strong>@PeckShieldAlert</strong> : Alertes automatisées de piratages et de transferts suspects.</li>
-                                    <li>• <strong>@CertiKAlert</strong> & <strong>@SlowMist_Team</strong> : Audits et alertes de phishing.</li>
-                                    <li>• <strong>@Ledger_Support</strong> : Annonces de faux supports et d'alertes de sécurité.</li>
-                                </ul>
-                            </div>
-                            <div class="p-3 bg-slate-900/60 rounded border border-slate-700/60">
-                                <span class="font-bold text-sky-400 block mb-1">Avantage stratégique SISR :</span>
-                                <p class="text-gray-400">
-                                    Permet d'appliquer des mesures proactives (ex: révocation de contrats, blocage d'URLs frauduleuses sur le pare-feu/DNS de l'entreprise) avant que les utilisateurs ne soient compromis.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="glass-panel rounded-2xl p-6 mb-6">
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+      <div>
+        <h2 class="text-2xl font-bold text-white">Historique de veille – mois par mois, de septembre 2025 à aujourd'hui</h2>
+        <p class="text-sm text-gray-400 mt-1">Au moins un relevé par mois. Chaque ligne renvoie vers une source vérifiée — communiqué officiel du fabricant ou média spécialisé reconnu.</p>
+      </div>
+      <span id="count-badge" class="bg-violet-900/50 text-violet-300 text-xs px-3 py-1 rounded-full border border-violet-700">21 entrées</span>
+    </div>
 
-            <!-- Preuves de configuration avec visuels -->
-            <div class="glass-panel rounded-2xl p-6">
-                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
-                    <svg class="w-6 h-6 mr-3 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Captures d'Écran & Preuves d'Implémentation
-                </h2>
+    <div class="grid sm:grid-cols-4 gap-3 mb-6">
+      <div class="bg-slate-800/50 rounded-lg p-3 border-l-2 border-sky-500"><div class="text-2xl font-bold text-white">13</div><div class="text-xs text-gray-400">Mois couverts sans rupture</div></div>
+      <div class="bg-slate-800/50 rounded-lg p-3 border-l-2 border-red-500"><div class="text-2xl font-bold text-white">12</div><div class="text-xs text-gray-400">Événements critiques</div></div>
+      <div class="bg-slate-800/50 rounded-lg p-3 border-l-2 border-amber-500"><div class="text-2xl font-bold text-white">4</div><div class="text-xs text-gray-400">Évolutions réglementaires</div></div>
+      <div class="bg-slate-800/50 rounded-lg p-3 border-l-2 border-violet-500"><div class="text-2xl font-bold text-white">4</div><div class="text-xs text-gray-400">Attaques de chaîne d'approvisionnement</div></div>
+    </div>
 
-                <div class="grid lg:grid-cols-2 gap-8">
-                    
-                    <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg text-white">Feedly</h3>
-                                <p class="text-xs text-gray-400">Collection : Crypto Security & Hardware</p>
-                            </div>
-                            <span class="bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded">Flux RSS</span>
-                        </div>
-                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
-                            <img src="Feedly_Collection_Crypto_Security.png" alt="Feedly Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="screenshot-placeholder absolute inset-0 hidden">
-                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span class="text-xs font-mono">Feedly_Collection_Crypto_Security.png</span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="mb-6 p-4 bg-slate-800/40 rounded-xl border border-slate-700 text-sm">
+      <span class="text-xs font-bold text-violet-400 uppercase">Contexte antérieur au suivi mensuel</span>
+      <ul class="mt-2 space-y-1 text-gray-300">
+        <li>• <strong>21/02/2025</strong> – Piratage de Bybit (~1,5 Md$) : l'interface de signature falsifiée, pas le multisig lui-même. <a href="https://thehackernews.com/2025/02/bybit-confirms-record-breaking-146.html" target="_blank" rel="noopener" class="text-violet-400 hover:underline">The Hacker News</a></li>
+        <li>• <strong>07/05/2025</strong> – Activation de Pectra et de l'EIP-7702 (abstraction de compte). <a href="https://ethereum.org/en/roadmap/pectra/7702" target="_blank" rel="noopener" class="text-violet-400 hover:underline">ethereum.org — documentation officielle</a></li>
+      </ul>
+    </div>
 
-                    <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg text-white">Google Alerts</h3>
-                                <p class="text-xs text-gray-400">Règles booléennes et filtrage de bruit</p>
-                            </div>
-                            <span class="bg-red-900 text-red-200 text-xs px-2 py-1 rounded">Monitoring</span>
-                        </div>
-                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
-                            <img src="GoogleAlerts_Config.png" alt="Google Alerts Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="screenshot-placeholder absolute inset-0 hidden">
-                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                                <span class="text-xs font-mono">GoogleAlerts_Config.png</span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="flex flex-wrap gap-2 mb-4" id="filters">
+      <button class="filter-btn on px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-800 text-gray-300" data-f="all">Tout</button>
+      <button class="filter-btn px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-800 text-gray-300" data-f="2025">2025</button>
+      <button class="filter-btn px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-800 text-gray-300" data-f="2026">2026</button>
+      <button class="filter-btn px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-800 text-gray-300" data-f="incident">Incidents &amp; menaces</button>
+      <button class="filter-btn px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-800 text-gray-300" data-f="standard">Standards</button>
+      <button class="filter-btn px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-800 text-gray-300" data-f="regle">Réglementaire</button>
+    </div>
 
-                    <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg text-white">Pocket</h3>
-                                <p class="text-xs text-gray-400">Système d'indexation par étiquettes</p>
-                            </div>
-                            <span class="bg-pink-900 text-pink-200 text-xs px-2 py-1 rounded">Bibliothèque</span>
-                        </div>
-                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
-                            <img src="Pocket_Archive_Tagging.png" alt="Pocket Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="screenshot-placeholder absolute inset-0 hidden">
-                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                                <span class="text-xs font-mono">Pocket_Archive_Tagging.png</span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="scroll-x rounded-lg border border-slate-700">
+      <table class="min-w-full divide-y divide-slate-700 text-sm">
+        <thead class="bg-slate-800 text-gray-400 uppercase font-bold text-xs">
+          <tr>
+            <th class="px-4 py-3 text-left whitespace-nowrap">Date</th>
+            <th class="px-4 py-3 text-left">Source</th>
+            <th class="px-4 py-3 text-left">Catégorie</th>
+            <th class="px-4 py-3 text-left">Événement relevé</th>
+            <th class="px-4 py-3 text-left">Impact</th>
+            <th class="px-4 py-3 text-left text-violet-400">Action côté SI</th>
+            <th class="px-4 py-3 text-center">Lien</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700 bg-slate-900/50 text-gray-300" id="veille-body">
+          <tr class="month-head bg-slate-800/80" data-year="2025">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Septembre 2025</td>
+          </tr>
+          <tr data-year="2025" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">08/09/25</td>
+            <td class="px-4 py-3">Aikido Security</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Chaîne d'appro.</span></td>
+            <td class="px-4 py-3">Plus de 18 paquets npm très utilisés (chalk, debug) piégés après le hameçonnage d'un mainteneur ; charge de type crypto-clipper interceptant les transactions Web3.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Épinglage des versions et audit des dépendances du parc.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2025">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Octobre 2025</td>
+          </tr>
+          <tr data-year="2025" data-cat="regle" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">08/10/25</td>
+            <td class="px-4 py-3">ANSSI – cyber.gouv.fr</td>
+            <td class="px-4 py-3"><span class="text-amber-400 border border-amber-900 bg-amber-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Réglementaire</span></td>
+            <td class="px-4 py-3">Position officielle : démarrer sans attendre l'inventaire cryptographique face à la menace post-quantique.</td>
+            <td class="px-4 py-3 text-yellow-500">Moyen</td>
+            <td class="px-4 py-3 text-white">Inventaire des courbes elliptiques utilisées.</td>
+            <td class="px-4 py-3 text-center"><a href="https://cyber.gouv.fr/enjeux-technologiques/cryptographie-post-quantique/" target="_blank" rel="noopener" class="table-link">🏛️</a></td>
+          </tr>
+          <tr data-year="2025" data-cat="regle" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">22/10/25</td>
+            <td class="px-4 py-3">Silicon.fr</td>
+            <td class="px-4 py-3"><span class="text-amber-400 border border-amber-900 bg-amber-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Réglementaire</span></td>
+            <td class="px-4 py-3">Agenda détaillé de l'ANSSI : PQC exigée en qualification dès 2027, fin des achats sans PQC après 2030.</td>
+            <td class="px-4 py-3 text-orange-400">Élevé</td>
+            <td class="px-4 py-3 text-white">Clause « état de l'art cryptographique » aux marchés.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.silicon.fr/cybersecurite-1371/anssi-agenda-post-quantique-224010" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2025">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Novembre 2025</td>
+          </tr>
+          <tr data-year="2025" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">24/11/25</td>
+            <td class="px-4 py-3">Datadog Security Labs</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Chaîne d'appro.</span></td>
+            <td class="px-4 py-3">« Shai-Hulud 2.0 » : second ver npm auto-répliquant, 796 paquets détournés en quelques heures.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">MFA résistante au hameçonnage et rotation des jetons de publication.</td>
+            <td class="px-4 py-3 text-center"><a href="https://securitylabs.datadoghq.com/articles/shai-hulud-2.0-npm-worm/" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2025">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Décembre 2025</td>
+          </tr>
+          <tr data-year="2025" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">24/12/25</td>
+            <td class="px-4 py-3">Trust Wallet (billet officiel)</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Chaîne d'appro.</span></td>
+            <td class="px-4 py-3">Extension Chrome v2.68 compromise via une clé API volée ; 2 520 portefeuilles vidés (~8,5 M$), rattaché à Shai-Hulud 2.0.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Dépendances verrouillées, contrôle renforcé du pipeline de publication.</td>
+            <td class="px-4 py-3 text-center"><a href="https://trustwallet.com/blog/announcements/trust-wallet-browser-extension-v268-incident-community-update" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Janvier 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">05/01/26</td>
+            <td class="px-4 py-3">SiliconANGLE</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Chaîne d'appro.</span></td>
+            <td class="px-4 py-3">Ledger confirme une fuite de données clients via son prestataire e-commerce Global-e (noms, adresses, historique de commandes).</td>
+            <td class="px-4 py-3 text-orange-400">Élevé</td>
+            <td class="px-4 py-3 text-white">Alerte sensibilisation : aucune donnée de commande ne vaut confirmation d'identité.</td>
+            <td class="px-4 py-3 text-center"><a href="https://siliconangle.com/2026/01/05/ledger-confirms-leak-customer-data-third-party-global-e-hack/" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">10/01/26</td>
+            <td class="px-4 py-3">CoinDesk</td>
+            <td class="px-4 py-3"><span class="text-orange-400 border border-orange-900 bg-orange-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Ingénierie sociale</span></td>
+            <td class="px-4 py-3">282 M$ en Bitcoin et Litecoin dérobés après qu'un usurpateur se soit fait passer pour le support Trezor et ait obtenu la phrase de récupération.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Rappel : aucun support légitime ne demande la seed phrase.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.coindesk.com/business/2026/01/16/hacker-steals-usd282-milion-in-hardware-wallet-social-engineering-attack" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Février 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">02/26</td>
+            <td class="px-4 py-3">Shattered.io</td>
+            <td class="px-4 py-3"><span class="text-orange-400 border border-orange-900 bg-orange-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Ingénierie sociale</span></td>
+            <td class="px-4 py-3">Clients Ledger et Trezor ciblés par de fausses lettres de sécurité envoyées par courrier postal, imitant les communications officielles.</td>
+            <td class="px-4 py-3 text-orange-400">Élevé</td>
+            <td class="px-4 py-3 text-white">Sensibilisation : le courrier postal n'est pas un canal de confiance par défaut.</td>
+            <td class="px-4 py-3 text-center"><a href="https://shattered.io/hardware-wallet-security-coldcard-hack-2026/" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Mars 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">22/03/26</td>
+            <td class="px-4 py-3">BeInCrypto</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Incident majeur</span></td>
+            <td class="px-4 py-3">Resolv Labs : compromission d'AWS KMS permettant la frappe non autorisée de 80 M de jetons USR (~25 M$), contagion sur plusieurs protocoles DeFi liés.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Revue des clés cloud à privilèges et séparation des rôles d'infrastructure.</td>
+            <td class="px-4 py-3 text-center"><a href="https://beincrypto.com/crypto-hacks-march-2026-52-million/" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Avril 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">01/04/26</td>
+            <td class="px-4 py-3">TRM Labs</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Incident majeur</span></td>
+            <td class="px-4 py-3">Drift Protocol : ~285 M$ dérobés en 12 minutes via des clés d'administration compromises, attribué à des acteurs nord-coréens.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Revue des accès privilégiés et cloisonnement des rôles admin.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.trmlabs.com/resources/blog/north-korean-hackers-attack-drift-protocol-in-285-million-heist" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">18/04/26</td>
+            <td class="px-4 py-3">LayerZero (billet officiel)</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Incident majeur</span></td>
+            <td class="px-4 py-3">Kelp DAO : ~290 M$ dérobés via l'empoisonnement de l'infrastructure RPC d'un vérificateur unique (1-of-1) sur le pont LayerZero.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Analyse du risque « vérificateur unique » sur tout pont inter-chaînes.</td>
+            <td class="px-4 py-3 text-center"><a href="https://layerzero.network/blog/kelpdao-incident-statement" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Mai 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="standard" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">12/05/26</td>
+            <td class="px-4 py-3">Ethereum Foundation (billet officiel)</td>
+            <td class="px-4 py-3"><span class="text-purple-400 border border-purple-900 bg-purple-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Standard</span></td>
+            <td class="px-4 py-3">Lancement de « Clear Signing » (ERC-7730) : Ledger, Trezor, MetaMask et WalletConnect rejoignent un standard de signature lisible, cité en réponse directe au piratage de Bybit.</td>
+            <td class="px-4 py-3 text-green-400">Positif</td>
+            <td class="px-4 py-3 text-white">Lisibilité des transactions exigée au cahier des charges.</td>
+            <td class="px-4 py-3 text-center"><a href="https://blog.ethereum.org/2026/05/12/clear-signing-announcement" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Juin 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">09/06/26</td>
+            <td class="px-4 py-3">CoinDesk</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Incident majeur</span></td>
+            <td class="px-4 py-3">Humanity Protocol : clés privées volées via un poste de développeur infecté par un malware, ~30 M$ dérobés, jeton en chute de 80 %.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Interdiction de stocker des clés sur un poste de développement non cloisonné.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.coindesk.com/tech/2026/06/09/humanity-protocol-token-crashes-more-than-80-after-a-usd32-million-private-key-hack" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Juillet 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">30/07/26</td>
+            <td class="px-4 py-3">Coinkite (avis officiel Coldcard)</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Faille matérielle</span></td>
+            <td class="px-4 py-3">Défaut de génération d'entropie dans le firmware Coldcard (2021-2026) : le générateur matériel était silencieusement remplacé par un PRNG logiciel prévisible.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Contrôle du processus de génération des clés ; migration des graines à risque.</td>
+            <td class="px-4 py-3 text-center"><a href="https://coldcard.com/resources/security/coldcard-security-and-verification" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Août 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">04/08/26</td>
+            <td class="px-4 py-3">TechCrunch</td>
+            <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Faille matérielle</span></td>
+            <td class="px-4 py-3">Plus de 130 M$ dérobés via la faille Coldcard, plusieurs groupes d'attaquants distincts identifiés par les analystes blockchain.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Suivi des avis constructeur comme source prioritaire de vérité.</td>
+            <td class="px-4 py-3 text-center"><a href="https://techcrunch.com/2026/08/04/hackers-steal-over-130-million-by-exploiting-bug-in-offline-hardware-wallets/" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr data-year="2026" data-cat="regle" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">28/08/26</td>
+            <td class="px-4 py-3">DonnéesPersonnelles.fr</td>
+            <td class="px-4 py-3"><span class="text-amber-400 border border-amber-900 bg-amber-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Réglementaire</span></td>
+            <td class="px-4 py-3">Calendrier PQC consolidé (ANSSI 2027, UE 2030-2035) ; risque « moisson aujourd'hui, déchiffrement demain ».</td>
+            <td class="px-4 py-3 text-yellow-500">Moyen</td>
+            <td class="px-4 py-3 text-white">Feuille de route de migration avec jalons datés.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.donneespersonnelles.fr/cryptographie-post-quantique" target="_blank" rel="noopener" class="table-link">📄</a></td>
+          </tr>
+          <tr class="month-head bg-slate-800/80" data-year="2026">
+            <td colspan="7" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-violet-300">Septembre 2026</td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">08/09/26</td>
+            <td class="px-4 py-3">Korben</td>
+            <td class="px-4 py-3"><span class="text-orange-400 border border-orange-900 bg-orange-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Ingénierie sociale</span></td>
+            <td class="px-4 py-3">Fausses mises en demeure de la DGFiP envoyées par la poste, QR code menant à un site voleur de cryptomonnaies.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">Rappel : aucun QR code fiscal non sollicité n'est scanné.</td>
+            <td class="px-4 py-3 text-center"><a href="https://korben.info/ils-envoient-par-la-poste-de-fausses-mises-en-demeure-des-impots-pour-voler-vos-cryptos.html" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr data-year="2026" data-cat="incident" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">09/09/26</td>
+            <td class="px-4 py-3">BleepingComputer</td>
+            <td class="px-4 py-3"><span class="text-orange-400 border border-orange-900 bg-orange-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Ingénierie sociale</span></td>
+            <td class="px-4 py-3">Brèche chez Brevo : 347 000 emails authentifiés SPF/DKIM/DMARC envoyés aux abonnés Trezor, ~2 500 clics avant coupure du domaine.</td>
+            <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
+            <td class="px-4 py-3 text-white">La phrase de récupération ne se saisit jamais en ligne, même sur un mail conforme.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.bleepingcomputer.com/news/security/trezor-347-000-users-targeted-in-phishing-attacks-after-brevo-breach/" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+          <tr data-year="2026" data-cat="regle" class="hover:bg-slate-800/70 transition">
+            <td class="px-4 py-3 text-gray-400 font-mono whitespace-nowrap">11/09/26</td>
+            <td class="px-4 py-3">ENISA (page officielle)</td>
+            <td class="px-4 py-3"><span class="text-amber-400 border border-amber-900 bg-amber-900/20 px-2 py-0.5 rounded text-xs whitespace-nowrap">Réglementaire</span></td>
+            <td class="px-4 py-3">Entrée en application du volet signalement du Cyber Resilience Act : faille exploitée à signaler sous 24 h via la Single Reporting Platform.</td>
+            <td class="px-4 py-3 text-orange-400">Élevé</td>
+            <td class="px-4 py-3 text-white">Modèle interne de notification aligné sur 24 h / 72 h / 14 jours.</td>
+            <td class="px-4 py-3 text-center"><a href="https://www.enisa.europa.eu/topics/product-security/single-reporting-platform-srp" target="_blank" rel="noopener" class="table-link">🔗</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-500 mt-4">Les dates correspondent à la date de relevé en veille (jour de l'événement ou, à défaut, de sa divulgation publique).</p>
+  </div>
 
-                     <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-700">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg text-white">X / Twitter Lists</h3>
-                                <p class="text-xs text-gray-400">Flux épuré : "Crypto Security Watch"</p>
-                            </div>
-                            <span class="bg-sky-900 text-sky-200 text-xs px-2 py-1 rounded">OSINT Temps Réel</span>
-                        </div>
-                        <div class="relative w-full h-48 rounded-lg overflow-hidden border border-slate-600">
-                            <img src="Twitter_List_CryptoSec.png" alt="Twitter Config" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="screenshot-placeholder absolute inset-0 hidden">
-                                <svg class="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-                                <span class="text-xs font-mono">Twitter_List_CryptoSec.png</span>
-                            </div>
-                        </div>
-                    </div>
+  <!-- Sources récurrentes -->
+  <div class="glass-panel rounded-2xl p-6">
+    <h2 class="text-xl font-bold text-white mb-4">Sources suivies en continu</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+      <a href="https://www.cert.ssi.gouv.fr/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">CERT-FR</span><p class="text-xs text-gray-400 mt-1">Avis et alertes officiels de l'ANSSI.</p></a>
+      <a href="https://cyber.gouv.fr/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">cyber.gouv.fr</span><p class="text-xs text-gray-400 mt-1">Doctrine, guides et enjeux technologiques.</p></a>
+      <a href="https://www.enisa.europa.eu/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">ENISA</span><p class="text-xs text-gray-400 mt-1">Agence européenne de cybersécurité, obligations CRA.</p></a>
+      <a href="https://www.bleepingcomputer.com/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">BleepingComputer</span><p class="text-xs text-gray-400 mt-1">Référence en brèches et vulnérabilités logicielles.</p></a>
+      <a href="https://thehackernews.com/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">The Hacker News</span><p class="text-xs text-gray-400 mt-1">Actualité cybersécurité et supply chain.</p></a>
+      <a href="https://www.trmlabs.com/resources" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">TRM Labs</span><p class="text-xs text-gray-400 mt-1">Analyses forensiques on-chain des piratages.</p></a>
+      <a href="https://www.coindesk.com/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">CoinDesk</span><p class="text-xs text-gray-400 mt-1">Couverture des incidents et des protocoles.</p></a>
+      <a href="https://blog.ethereum.org/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">Ethereum Foundation Blog</span><p class="text-xs text-gray-400 mt-1">Annonces officielles de standards et de sécurité.</p></a>
+      <a href="https://securitylabs.datadoghq.com/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">Datadog Security Labs</span><p class="text-xs text-gray-400 mt-1">Analyses techniques des attaques de supply chain npm.</p></a>
+      <a href="https://coldcard.com/resources/security" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">Coinkite / Coldcard</span><p class="text-xs text-gray-400 mt-1">Avis de sécurité et historique de divulgation du fabricant.</p></a>
+      <a href="https://www.ledger.com/blog" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">Ledger Blog</span><p class="text-xs text-gray-400 mt-1">Annonces et alertes du constructeur français.</p></a>
+      <a href="https://techcrunch.com/category/security/" target="_blank" rel="noopener" class="block p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-violet-500/60 transition">
+        <span class="text-white font-semibold">TechCrunch Security</span><p class="text-xs text-gray-400 mt-1">Couverture grand public des incidents majeurs.</p></a>
+    </div>
+  </div>
+</section>
 
-                </div>
-            </div>
-        </section>
+<!-- ANALYSE -->
+<section id="analyse" class="content-section">
+  <div class="grid lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-1 space-y-6">
+      <div class="glass-panel p-6 rounded-2xl">
+        <h3 class="text-lg font-bold text-white mb-4">Répartition des entrées de veille</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Incidents &amp; ingénierie sociale</span><span>7 / 17</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width:74%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Standards &amp; protocoles</span><span>1 / 19</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-violet-500 h-2 rounded-full" style="width:5%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Réglementaire &amp; post-quantique</span><span>4 / 19</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width:21%"></div></div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-4">Répartition de mes propres relevés, et non de la sinistralité réelle du secteur.</p>
+      </div>
 
-        <!-- SECTION 3 : TABLEAU HISTORIQUE -->
-        <section id="tableau" class="content-section">
-            <div class="glass-panel rounded-2xl p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-white">Historique de Veille (2025 - 2026)</h2>
-                    <span class="bg-violet-900/50 text-violet-300 text-xs px-3 py-1 rounded-full border border-violet-700">12 entrées qualifiées</span>
-                </div>
+      <div class="glass-panel p-6 rounded-2xl border-violet-500/30">
+        <h3 class="text-lg font-bold text-white mb-2">
+          <span class="bg-white text-violet-900 text-xs font-bold px-2 py-0.5 rounded mr-2">SYNTHÈSE</span> Vision SISR
+        </h3>
+        <p class="text-sm text-gray-300 italic">« Le maillon faible n'est plus la clé privée elle-même mais l'écran qui la fait signer. Pour un administrateur, l'enjeu se déplace vers la fiabilité de l'interface de validation, la maîtrise de la chaîne d'approvisionnement logicielle et l'anticipation de la migration cryptographique. »</p>
+      </div>
+    </div>
 
-                <div class="overflow-x-auto rounded-lg border border-slate-700">
-                    <table class="min-w-full divide-y divide-slate-700 text-sm">
-                        <thead class="bg-slate-800 text-gray-400 uppercase font-bold text-xs">
-                            <tr>
-                                <th class="px-4 py-3 text-left">Date</th>
-                                <th class="px-4 py-3 text-left">Source</th>
-                                <th class="px-4 py-3 text-left">Catégorie</th>
-                                <th class="px-4 py-3 text-left w-1/3">Description de l'Événement</th>
-                                <th class="px-4 py-3 text-left">Impact</th>
-                                <th class="px-4 py-3 text-left text-violet-400">Action Proactive SISR</th>
-                                <th class="px-4 py-3 text-center">Lien</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-700 bg-slate-900/50 text-gray-300">
-                            <!-- 2025 -->
-                            <tr class="hover:bg-slate-800 transition">
-                                <td class="px-4 py-3 text-gray-500 font-mono">10/01/25</td>
-                                <td class="px-4 py-3">Ledger Blog</td>
-                                <td class="px-4 py-3"><span class="text-blue-400 border border-blue-900 bg-blue-900/20 px-2 py-0.5 rounded text-xs">Patch</span></td>
-                                <td class="px-4 py-3">Correction faille Bluetooth appairage Nano X.</td>
-                                <td class="px-4 py-3 text-yellow-500">Moyen</td>
-                                <td class="px-4 py-3 text-white">MAJ du parc de test des clés physiques.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://www.ledger.com/blog" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition">
-                                <td class="px-4 py-3 text-gray-500 font-mono">17/01/25</td>
-                                <td class="px-4 py-3">CoinDesk</td>
-                                <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs">Phishing</span></td>
-                                <td class="px-4 py-3">Campagne "Fake MetaMask" via régies publicitaires.</td>
-                                <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
-                                <td class="px-4 py-3 text-white">Blocage DNS des domaines malveillants identifiés.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://www.coindesk.com/tag/security/" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition">
-                                <td class="px-4 py-3 text-gray-500 font-mono">04/02/25</td>
-                                <td class="px-4 py-3">SlowMist</td>
-                                <td class="px-4 py-3"><span class="text-orange-400 border border-orange-900 bg-orange-900/20 px-2 py-0.5 rounded text-xs">Hack</span></td>
-                                <td class="px-4 py-3">Vulnérabilité MPC (défaut d'entropie des shards).</td>
-                                <td class="px-4 py-3 text-orange-400">Élevé</td>
-                                <td class="px-4 py-3 text-white">Analyse des protocoles TSS multi-parties.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://slowmist.medium.com/" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition">
-                                <td class="px-4 py-3 text-gray-500 font-mono">15/10/25</td>
-                                <td class="px-4 py-3">Trezor Blog</td>
-                                <td class="px-4 py-3"><span class="text-blue-400 border border-blue-900 bg-blue-900/20 px-2 py-0.5 rounded text-xs">Hardware</span></td>
-                                <td class="px-4 py-3">Déploiement du Secure Element EAL6+ sur Trezor Safe 3.</td>
-                                <td class="px-4 py-3 text-gray-400">Info</td>
-                                <td class="px-4 py-3 text-white">Comparatif technique des niveaux d'isolation matérielle.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://blog.trezor.io/" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition">
-                                <td class="px-4 py-3 text-gray-500 font-mono">02/11/25</td>
-                                <td class="px-4 py-3">TheHackerNews</td>
-                                <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs">Malware</span></td>
-                                <td class="px-4 py-3">Infostealer macOS extrayant les coffres d'extensions web.</td>
-                                <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
-                                <td class="px-4 py-3 text-white">Mise à jour des signatures EDR sur postes nomades.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://thehackernews.com/search/label/Cryptocurrency" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition">
-                                <td class="px-4 py-3 text-gray-500 font-mono">05/12/25</td>
-                                <td class="px-4 py-3">Unchained Podcast</td>
-                                <td class="px-4 py-3"><span class="text-purple-400 border border-purple-900 bg-purple-900/20 px-2 py-0.5 rounded text-xs">Architecture</span></td>
-                                <td class="px-4 py-3">Gouvernance multi-signatures en entreprise (Fireblocks, Safe).</td>
-                                <td class="px-4 py-3 text-blue-400">Stratégique</td>
-                                <td class="px-4 py-3 text-white">Documentation d'un schéma d'approbation à 3 signataires.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://unchainedcrypto.com/podcasts/" target="_blank" class="table-link">🎙️</a></td>
-                            </tr>
+    <div class="lg:col-span-2 glass-panel p-8 rounded-2xl">
+      <h2 class="text-3xl font-bold text-white mb-6">Mutations techniques majeures</h2>
+      <div class="space-y-8">
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">🔍</div>
+          <div>
+            <h3 class="text-xl font-semibold text-white">La fin programmée de la signature aveugle</h3>
+            <p class="text-gray-400 mt-2 text-sm leading-relaxed">Le piratage de Bybit a démontré qu'un dispositif matériel n'apporte aucune garantie si l'opérateur approuve un contenu qu'il ne peut pas lire. La réponse de la filière consiste à faire interpréter la transaction par l'appareil lui-même : contrat ciblé, destinataire et montant affichés en clair avant tout consentement cryptographique.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">🛡️</div>
+          <div>
+            <h3 class="text-xl font-semibold text-white">Abstraction de compte : de la clé unique à la politique d'accès</h3>
+            <p class="text-gray-400 mt-2 text-sm leading-relaxed">Avec l'EIP-7702, un compte classique peut se comporter temporairement comme un contrat intelligent. Cela ouvre la porte à des politiques proches de celles d'un annuaire d'entreprise : plafonds de dépense, séparation des rôles, récupération par gardiens. En contrepartie, l'autorisation signée devient elle-même une cible de phishing.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">📦</div>
+          <div>
+            <h3 class="text-xl font-semibold text-white">La chaîne d'approvisionnement logicielle comme vecteur principal</h3>
+            <p class="text-gray-400 mt-2 text-sm leading-relaxed">Interface hébergée compromise, paquets npm empoisonnés, extensions de navigateur malveillantes : l'attaquant ne casse plus la cryptographie, il s'insère en amont de la signature. Les contre-mesures relèvent directement du métier SISR : verrouillage des dépendances, listes blanches d'extensions, contrôle d'intégrité.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">⚛️</div>
+          <div>
+            <h3 class="text-xl font-semibold text-white">Anticipation de la cryptographie post-quantique</h3>
+            <p class="text-gray-400 mt-2 text-sm leading-relaxed">L'ANSSI fixe des jalons contraignants pour la qualification des produits et les achats. Les signatures sur courbes elliptiques employées par les portefeuilles sont concernées, et l'inventaire cryptographique devient le premier livrable attendu d'un service informatique.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                            <!-- 2026 -->
-                            <tr class="hover:bg-slate-800 transition bg-violet-900/10 border-l-2 border-violet-500">
-                                <td class="px-4 py-3 text-violet-300 font-bold font-mono">15/01/26</td>
-                                <td class="px-4 py-3 text-white">Ledger Blog</td>
-                                <td class="px-4 py-3"><span class="text-green-400 border border-green-900 bg-green-900/20 px-2 py-0.5 rounded text-xs">Clear Signing</span></td>
-                                <td class="px-4 py-3 text-white">Généralisation du standard de Clear Signing face aux "Blind Signatures".</td>
-                                <td class="px-4 py-3 text-green-400">Positif</td>
-                                <td class="px-4 py-3 text-white">Interdiction stricte de la signature aveugle sur le parc.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://www.ledger.com/blog" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition bg-violet-900/10">
-                                <td class="px-4 py-3 text-violet-300 font-mono">08/03/26</td>
-                                <td class="px-4 py-3 text-white">BleepingComputer</td>
-                                <td class="px-4 py-3"><span class="text-red-400 border border-red-900 bg-red-900/20 px-2 py-0.5 rounded text-xs">Exploit Off-chain</span></td>
-                                <td class="px-4 py-3 text-white">Détournement d'autorisations Permit2 via typosquatting de dApps.</td>
-                                <td class="px-4 py-3 text-red-500 font-bold">Critique</td>
-                                <td class="px-4 py-3 text-white">Procédure systématique de révocation des allowances mensuelle.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://www.bleepingcomputer.com" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition bg-violet-900/10">
-                                <td class="px-4 py-3 text-violet-300 font-mono">22/05/26</td>
-                                <td class="px-4 py-3 text-white">Ethereum Foundation</td>
-                                <td class="px-4 py-3"><span class="text-purple-400 border border-purple-900 bg-purple-900/20 px-2 py-0.5 rounded text-xs">Standard</span></td>
-                                <td class="px-4 py-3 text-white">Spécification de l'EIP-7702 permettant la conversion temporaire d'EOA en Smart Accounts.</td>
-                                <td class="px-4 py-3 text-blue-400">Élevé</td>
-                                <td class="px-4 py-3 text-white">Évaluation des mécanismes de Social Recovery sans phrase de passe.</td>
-                                <td class="px-4 py-3 text-center"><a href="https://eips.ethereum.org" target="_blank" class="table-link">🔗</a></td>
-                            </tr>
-                            <tr class="hover:bg-slate-800 transition bg-violet-900/10">
-                                <td class="px-4 py-3 text-violet-300 font-mono">12/08/26</td>
-                                <td class="px-4 py-3 text-white">NIST & ANSSI</td>
-                                <td class="px-4 py-3"><span class="text-amber-400 border border-amber-900 bg-amber-900/20 px-2 py-0.5 rounded text-xs">PQC</span></td>
-                                <td class="px-4 py-3 text-white">Recommandations de migration des courbes elliptiques (ECDSA/Ed25519) vers ML-DSA.</td>
-                                <td class="px-4 py-3 text-yellow-500">Moyen</td>
-                                <td class="px-4 py-3 text-white">Veille sur la compatibilité des puces cartes à puce (Secure Element).</td>
-                                <td class="px-4 py-3 text-center"><a href="https://www.ssi.gouv.fr" target="_blank" class="table-link">📄</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+<!-- CONCLUSION -->
+<section id="conclusion" class="content-section">
+  <div class="glass-panel rounded-2xl p-8 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-white mb-6 text-center">Alignement avec le référentiel BTS SIO – SISR</h2>
+    <p class="text-lg text-gray-300 mb-8 text-center">La sécurisation des portefeuilles et des clés de signature transpose les principes classiques de la sécurité des systèmes d'information à un environnement distribué et irréversible.</p>
+    <div class="grid md:grid-cols-3 gap-4 text-left pt-8 border-t border-slate-700">
+      <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
+        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 1 – Patrimoine informatique</span>
+        <h4 class="font-bold text-white mt-1 mb-2">Inventaire &amp; durcissement</h4>
+        <p class="text-xs text-gray-400">Cartographie des clés et des modules matériels, suivi des mises à jour de microprogrammes, inventaire cryptographique en vue de la migration post-quantique.</p>
+      </div>
+      <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
+        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 2 – Réponse aux incidents</span>
+        <h4 class="font-bold text-white mt-1 mb-2">Détection &amp; isolation</h4>
+        <p class="text-xs text-gray-400">Procédure de réaction en cas de compromission d'un poste, révocation des autorisations de dépense, blocage des domaines et des passerelles de commande.</p>
+      </div>
+      <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
+        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 3 – Cybersécurité</span>
+        <h4 class="font-bold text-white mt-1 mb-2">Politique d'accès &amp; MFA</h4>
+        <p class="text-xs text-gray-400">Authentification matérielle FIDO2 sur les interfaces d'administration, séparation des rôles et validation à plusieurs signataires.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- SECTION 4 : ANALYSE DES TENDANCES -->
-        <section id="analyse" class="content-section">
-            <div class="grid lg:grid-cols-3 gap-8">
-                
-                <div class="lg:col-span-1 space-y-6">
-                    <div class="glass-panel p-6 rounded-2xl">
-                        <h3 class="text-lg font-bold text-white mb-4">Vecteurs d'Attaque (Données 2025-2026)</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Phishing & Signatures Trompeuses (Permit2)</span><span>62%</span></div>
-                                <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width: 62%"></div></div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Infostealers & Clipbankers OS</span><span>22%</span></div>
-                                <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width: 22%"></div></div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-xs mb-1 text-gray-400"><span>Vulnérabilités Microprogrammes / Hardware</span><span>16%</span></div>
-                                <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-yellow-500 h-2 rounded-full" style="width: 16%"></div></div>
-                            </div>
-                        </div>
-                    </div>
+</main>
 
-                    <div class="glass-panel p-6 rounded-2xl bg-gradient-to-br from-violet-900/40 to-slate-900 border-violet-500/30">
-                        <h3 class="text-lg font-bold text-white mb-2 flex items-center">
-                            <span class="bg-white text-violet-900 text-xs font-bold px-2 py-0.5 rounded mr-2">SYNTHÈSE</span> Vision SISR
-                        </h3>
-                        <p class="text-sm text-gray-300 italic">
-                            "En 2026, l'authentification et la détention de la clé privée s'affranchissent du modèle historique des 24 mots. L'enjeu pour l'administrateur d'infrastructure est double : maîtriser les architectures multi-signatures (MPC / Safe) et former les utilisateurs finaux à la vérification systématique des signatures claires (Clear Signing)."
-                        </p>
-                    </div>
-                </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = [
+    { id:'accueil', name:'Accueil' },
+    { id:'outils', name:'Méthodo & outils' },
+    { id:'tableau', name:'Historique & suivi' },
+    { id:'analyse', name:'Analyse & tendances' },
+    { id:'conclusion', name:'Bilan SISR' }
+  ];
+  const desktop = document.getElementById('desktop-menu');
+  const mobile = document.getElementById('mobile-menu');
 
-                <div class="lg:col-span-2 glass-panel p-8 rounded-2xl">
-                    <h2 class="text-3xl font-bold text-white mb-6">Mutations Techniques Majeures</h2>
-                    
-                    <div class="space-y-8">
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">🛡️</div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-white">Transition vers l'Account Abstraction & EIP-7702</h3>
-                                <p class="text-gray-400 mt-2 text-sm leading-relaxed">
-                                    Les portefeuilles EOA traditionnels (Externally Owned Accounts) sont intrinsèquement limités : une clé privée compromise équivaut à la perte définitive des actifs. L'adoption progressive des Smart Accounts permet de définir des politiques de sécurité inspirées de l'Active Directory : limites journalières de dépenses, rôles administrateur/opérateur et mécanisme de <em>Social Recovery</em> avec des gardiens de confiance (sans seed phrase unique).
-                                </p>
-                            </div>
-                        </div>
+  function paint(id){
+    document.querySelectorAll('.nav-btn').forEach(b=>{
+      const on = b.dataset.target === id;
+      b.className = 'nav-btn whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-all ' +
+        (on ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/30' : 'text-gray-400 hover:text-white hover:bg-slate-800');
+    });
+  }
+  function switchSection(id){
+    document.querySelectorAll('.content-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});
+    const t = document.getElementById(id);
+    t.style.display='block';
+    setTimeout(()=>t.classList.add('active'),10);
+    paint(id);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  sections.forEach(s=>{
+    [desktop, mobile].forEach(container=>{
+      const b=document.createElement('button');
+      b.innerText=s.name; b.dataset.target=s.id; b.className='nav-btn';
+      b.onclick=()=>switchSection(s.id);
+      container.appendChild(b);
+    });
+  });
+  switchSection('accueil');
 
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">🔍</div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-white">La fin programmée du "Blind Signing"</h3>
-                                <p class="text-gray-400 mt-2 text-sm leading-relaxed">
-                                    Historiquement, signer une transaction complexe (DeFi, contrats intelligents) affichait des hachages illisibles sur les dispositifs physiques. L'industrie impose désormais le <strong>Clear Signing</strong> : le dispositif matériel interprète et affiche lisiblement le contrat ciblé, l'adresse de destination exacte et les montants avant tout consentement cryptographique.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">⚛️</div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-white">Anticipation de la Cryptographie Post-Quantique (PQC)</h3>
-                                <p class="text-gray-400 mt-2 text-sm leading-relaxed">
-                                    Les courbes elliptiques couramment utilisées (Secp256k1) devront être migrées vers des standards résistant aux algorithmes de Shor. Les constructeurs préparent la mise à jour des coprocesseurs sécurisés afin de pouvoir exécuter des algorithmes à base de réseaux euclidiens (NIST ML-DSA).
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 5 : CONCLUSION & RÉFÉRENTIEL -->
-        <section id="conclusion" class="content-section">
-            <div class="glass-panel rounded-2xl p-8 text-center max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-white mb-6">Alignement avec le Référentiel BTS SIO SISR</h2>
-                <p class="text-lg text-gray-300 mb-8">
-                    La sécurisation des portefeuilles et des clés de signature illustre la transposition des principes fondamentaux de la sécurité des systèmes d'information aux environnements distribués.
-                </p>
-
-                <div class="grid md:grid-cols-3 gap-4 text-left mt-8 pt-8 border-t border-slate-700">
-                    <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
-                        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 1 - Gestion du Patrimoine</span>
-                        <h4 class="font-bold text-white mt-1 mb-2">Inventaire & Durcissement</h4>
-                        <p class="text-xs text-gray-400">Cartographie des clés privées et HSM. Application stricte des mises à jour de firmwares sur les modules matériels de chiffrement.</p>
-                    </div>
-                    <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
-                        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 2 - Réponse aux Incidents</span>
-                        <h4 class="font-bold text-white mt-1 mb-2">Détection & Isolation</h4>
-                        <p class="text-xs text-gray-400">Procédure de gel d'actifs en cas de compromission d'un poste, révocation d'allowances frauduleuses et blocage des passerelles C2.</p>
-                    </div>
-                    <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700">
-                        <span class="text-xs font-bold text-violet-400 uppercase">Bloc 3 - Cybersécurité</span>
-                        <h4 class="font-bold text-white mt-1 mb-2">Politique d'Accès & 2FA</h4>
-                        <p class="text-xs text-gray-400">Mise en place de clés FIDO2/U2F (YubiKey) pour éliminer les risques de SIM-swapping lors de l'accès aux interfaces d'administration.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = [
-                { id: 'accueil', name: 'Accueil' },
-                { id: 'outils', name: 'Méthodo & Outils Détaillés' },
-                { id: 'tableau', name: 'Historique & Suivi' },
-                { id: 'analyse', name: 'Analyse & Tendances' },
-                { id: 'conclusion', name: 'Bilan SISR' }
-            ];
-
-            const navContainer = document.getElementById('desktop-menu');
-
-            function switchSection(id) {
-                document.querySelectorAll('.content-section').forEach(el => {
-                    el.classList.remove('active');
-                    el.style.display = 'none';
-                });
-                
-                const target = document.getElementById(id);
-                target.style.display = 'block';
-                setTimeout(() => target.classList.add('active'), 10);
-
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    if(btn.dataset.target === id) {
-                        btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-medium bg-violet-600 text-white shadow-lg shadow-violet-500/30 transition-all transform scale-105';
-                    } else {
-                        btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-slate-800 transition-all';
-                    }
-                });
-            }
-
-            sections.forEach(s => {
-                const btn = document.createElement('button');
-                btn.innerText = s.name;
-                btn.dataset.target = s.id;
-                btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-slate-800 transition-all';
-                btn.onclick = () => switchSection(s.id);
-                navContainer.appendChild(btn);
-            });
-
-            switchSection('accueil');
-        });
-    </script>
+  // Filtres du tableau
+  const rows = [...document.querySelectorAll('#veille-body tr')];
+  const badge = document.getElementById('count-badge');
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      const f = btn.dataset.f;
+      let n = 0;
+      rows.forEach(r=>{
+        const head = r.classList.contains('month-head');
+        let show;
+        if(head){ show = (f==='all' || r.dataset.year===f); }
+        else { show = (f==='all' || r.dataset.year===f || r.dataset.cat===f); }
+        r.style.display = show ? '' : 'none';
+        if(show && !head) n++;
+      });
+      badge.textContent = n + (n>1 ? ' entrées' : ' entrée');
+    });
+  });
+});
+</script>
 </body>
 </html>
